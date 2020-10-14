@@ -4,14 +4,14 @@ The application that I will be creating is a basic library application that save
 
 **Main Features**
 
-* Add attributes to each book such as
+* Add information to each book such as:
   * Title
   * Author
-  * Genre
+  * Genre(s)
   * \# of Pages
-  * Published date
   * Rating /10
-* Create custom series of books
+  * Whether book has been read
+* Create custom lists of books
 * Sort and filter library
 
 I came up with the idea for this project because I have a list of books that I read myself, but I am organizing them
@@ -19,9 +19,8 @@ I came up with the idea for this project because I have a list of books that I r
 
 ## User Stories
 
-* As a user, I want to be able to view my library (list of books)
-* As a user, I want to be able to add a book to my library
-* As a user, I want to be able to remove a book from my library
-* As a user, I want to be able to indicate that I have or have not read a book
-* As a user, I want to be able to see the list of books that I have read and a list of books that I have not read
-
+* As a user, I want to be able to add and remove books from my library
+* As a user, I want to be able to edit the information about a book
+* As a user, I want to be able to view my library where each book displays a title and an author
+* As a user, I want to be able to view the information about a book
+* As a user, I want to be able to filter my library based on the information about books
