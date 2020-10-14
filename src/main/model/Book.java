@@ -3,7 +3,6 @@ package model;
 import java.util.List;
 
 // Represents a book with a title, author, list of genres, pages, rating /10, and state of whether book has been read;
-// allAuthors and allGenres represents the total set of authors and genres in library
 public class Book {
     private String title;
     private String author;
@@ -15,8 +14,6 @@ public class Book {
     // REQUIRES: pages > 0; 0 <= rating <= 10
     // EFFECTS: Creates a new book with given title, author, list of genres, pages, rating /10, and state of whether
     //          book has been read;
-    //          If allAuthors does not contain author, add author to allAuthors;
-    //          If allGenres does not contain genre in genres, add genre to allGenres
     public Book(String title, String author, List<String> genres, int pages, int rating, boolean complete) {
         this.title = title;
         this.author = author;
