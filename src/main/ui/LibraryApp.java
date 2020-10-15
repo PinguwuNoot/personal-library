@@ -23,21 +23,21 @@ public class LibraryApp {
         library = new Library();
         scanner = new Scanner(System.in);
 
-        String title = "Crime and Punishment";
-        String author = "Fyodor Dostoevsky";
-        List<String> genres = new ArrayList<>();
-        genres.add("Fiction");
-        genres.add("Philosophy");
-        genres.add("Psychology");
-        genres.add("Crime");
-        int pages = 545;
-        int rating = 9;
-        boolean complete = false;
-
-        Book testBook = new Book(title, author, genres, pages, rating, complete);
-        library.addBook(testBook);
-        Book testBook1 = new Book("Different Title", author, genres, pages, rating, complete);
-        library.addBook(testBook1);
+//        String title = "Crime and Punishment";
+//        String author = "Fyodor Dostoevsky";
+//        List<String> genres = new ArrayList<>();
+//        genres.add("Fiction");
+//        genres.add("Philosophy");
+//        genres.add("Psychology");
+//        genres.add("Crime");
+//        int pages = 545;
+//        int rating = 9;
+//        boolean complete = false;
+//
+//        Book testBook = new Book(title, author, genres, pages, rating, complete);
+//        library.addBook(testBook);
+//        Book testBook1 = new Book("Different Title", author, genres, pages, rating, complete);
+//        library.addBook(testBook1);
     }
 
     // EFFECTS: receives user input
