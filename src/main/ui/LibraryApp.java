@@ -360,7 +360,7 @@ public class LibraryApp {
         if (book.getComplete()) {
             System.out.println("6. Finished");
         } else {
-            System.out.println("7. Unfinished");
+            System.out.println("6. Unfinished");
         }
     }
 
