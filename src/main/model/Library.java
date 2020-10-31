@@ -1,10 +1,14 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 // Represents a library that contains a list of books
-public class Library {
+public class Library implements Writable {
     protected List<Book> books;
 
     // EFFECTS: creates an empty library
@@ -37,7 +41,25 @@ public class Library {
     }
 
     // EFFECTS: returns a list of all books in library
-    public List<Book> getAllBooks() {
+    public List<Book> getBooks() {
         return books;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject jsonLibrary = new JSONObject();
+        jsonLibrary.put("books", booksToJson());
+        
+        return jsonLibrary;
+    }
+
+    private JSONArray booksToJson() {
+        JSONArray jsonBooks = new JSONArray();
+
+        for (Book b : books) {
+            jsonBooks.put(b.toJson());
+        }
+
+        return jsonBooks;
     }
 }

@@ -19,7 +19,12 @@ I came up with the idea for this project because I have a list of books that I r
 
 ## User Stories
 
-* As a user, I want to be able to add and remove books from my library
-* As a user, I want to be able to edit the information about a book
 * As a user, I want to be able to view my library where each book displays a title and an author
+* As a user, I want to be able to add and remove books from my library
 * As a user, I want to be able to view the information about a book
+* As a user, I want to be able to edit the information about a book
+
+
+
+* As a user, I want to be able to save my library to a file
+* As a user, I want to be able to load my library from a file

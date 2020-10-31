@@ -49,6 +49,8 @@ class LibraryTest {
 
         books.addBook(crimeAndPunishment);
 
+        //crimeAndPunishment = new Book(title, author, genres, pages, rating, complete);
+
         assertEquals(1, books.size());
         assertTrue(books.contains(crimeAndPunishment));
     }
@@ -69,10 +71,10 @@ class LibraryTest {
     @Test
     void testGetAllBooks() {
         List<Book> listOfBooks = new ArrayList<>();
-        assertEquals(listOfBooks, books.getAllBooks());
+        assertEquals(listOfBooks, books.getBooks());
 
         listOfBooks.add(crimeAndPunishment);
         books.addBook(crimeAndPunishment);
-        assertEquals(listOfBooks, books.getAllBooks());
+        assertEquals(listOfBooks, books.getBooks());
     }
 }

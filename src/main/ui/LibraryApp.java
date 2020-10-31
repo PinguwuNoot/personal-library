@@ -1,19 +1,28 @@
 package ui;
 
 import model.*;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 // Library application
 public class LibraryApp {
+    private static final String JSON_FILE_PATH = "./data/library.json";
     private Library library;
     private Scanner scanner;
+    JsonWriter jsonWriter;
+    JsonReader jsonReader;
 
     // EFFECTS: Runs the library application
     public LibraryApp() {
         init();
+        jsonWriter = new JsonWriter(JSON_FILE_PATH);
+        jsonReader = new JsonReader(JSON_FILE_PATH);
         runLibrary();
     }
 
@@ -36,7 +45,7 @@ public class LibraryApp {
 //
 //        Book testBook = new Book(title, author, genres, pages, rating, complete);
 //        library.addBook(testBook);
-//        Book testBook1 = new Book("Different Title", author, genres, pages, rating, complete);
+//        Book testBook1 = new Book("Different Title", "Different Author", genres, pages, rating, complete);
 //        library.addBook(testBook1);
     }
 
@@ -55,12 +64,12 @@ public class LibraryApp {
 
     // EFFECTS: displays all books in library with title and author
     private void displayLibrary() {
-        System.out.println();
+        System.out.println("\nLibrary:");
 
         if (library.size() == 0) {
             System.out.println("Empty library");
         } else {
-            for (Book b : library.getAllBooks()) {
+            for (Book b : library.getBooks()) {
                 System.out.println(b.getTitle() + " - " + b.getAuthor());
             }
         }
@@ -71,7 +80,10 @@ public class LibraryApp {
         System.out.println("\n1. Add book to library");
         System.out.println("2. Remove book from library");
         System.out.println("3. View book information");
-        System.out.println("4. Edit book information\n");
+        System.out.println("4. Edit book information");
+        System.out.println("5. Save library");
+        System.out.println("6. Load library");
+        System.out.println("0. Exit library\n");
     }
 
     // EFFECTS: processes user input
@@ -84,8 +96,14 @@ public class LibraryApp {
             viewBook();
         } else if (input == 4) {
             editBook();
+        } else if (input == 5) {
+            saveLibrary();
+        } else if (input == 6) {
+            loadLibrary();
+        } else if (input == 0) {
+            System.exit(0);
         } else {
-            System.out.println("Wrong input");
+            System.out.println("Invalid input...");
         }
     }
 
@@ -108,7 +126,7 @@ public class LibraryApp {
         int rating = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.print("\nHave you read this book? (y/n)");
+        System.out.print("\nHave you read this book? (y/n) ");
         String input = scanner.nextLine();
         boolean complete = input.toLowerCase().equals("y");
 
@@ -213,15 +231,15 @@ public class LibraryApp {
             System.out.println("No books to remove");
         } else {
             int i = 1;
-            for (Book b : library.getAllBooks()) {
-                System.out.println(i + ". " +  b.getTitle() + " - " + b.getAuthor());
+            for (Book b : library.getBooks()) {
+                System.out.println(i + ". " + b.getTitle() + " - " + b.getAuthor());
                 i++;
             }
 
             System.out.println("\nChoose book to remove: ");
             int input = scanner.nextInt();
             i = 1;
-            for (Book b : library.getAllBooks()) {
+            for (Book b : library.getBooks()) {
                 if (input == i) {
                     library.removeBook(b);
                     break;
@@ -239,7 +257,7 @@ public class LibraryApp {
             System.out.println("No books to view");
         } else {
             int i = 1;
-            for (Book b : library.getAllBooks()) {
+            for (Book b : library.getBooks()) {
                 System.out.println(i + ". " + b.getTitle() + " - " + b.getAuthor());
                 i++;
             }
@@ -247,7 +265,7 @@ public class LibraryApp {
             System.out.print("\nChoose book to view: ");
             int input = scanner.nextInt();
             i = 1;
-            for (Book b : library.getAllBooks()) {
+            for (Book b : library.getBooks()) {
                 if (input == i) {
                     displayBookInfo(b);
                     break;
@@ -262,18 +280,17 @@ public class LibraryApp {
         System.out.println("\nTitle: " + book.getTitle());
         System.out.println("Author: " + book.getAuthor());
 
-        String genres = "";
+        StringBuilder genres = new StringBuilder();
         int i = 1;
         for (String g : book.getGenres()) {
             if (i == book.getGenres().size()) {
-                genres += g;
+                genres.append(g);
             } else {
-                genres += g + ", ";
+                genres.append(g).append(", ");
             }
             i++;
         }
-
-        System.out.println("Genres: " + genres);
+        System.out.println("Genres: " + genres.toString());
 
         System.out.println("Pages: " + book.getPages());
         System.out.println("Rating: " + book.getRating());
@@ -294,7 +311,7 @@ public class LibraryApp {
             System.out.println("No books to edit");
         } else {
             int i = 1;
-            for (Book b : library.getAllBooks()) {
+            for (Book b : library.getBooks()) {
                 System.out.println(i + ". " + b.getTitle() + " - " + b.getAuthor());
                 i++;
             }
@@ -302,7 +319,7 @@ public class LibraryApp {
             System.out.print("\nChoose book to edit: ");
             int input = scanner.nextInt();
             i = 1;
-            for (Book b : library.getAllBooks()) {
+            for (Book b : library.getBooks()) {
                 if (input == i) {
                     editInfo(b);
                     break;
@@ -341,18 +358,17 @@ public class LibraryApp {
         System.out.println("\n1. Title: " + book.getTitle());
         System.out.println("2. Author: " + book.getAuthor());
 
-        String genres = "";
+        StringBuilder genres = new StringBuilder();
         int i = 1;
         for (String g : book.getGenres()) {
             if (i == book.getGenres().size()) {
-                genres += g;
+                genres.append(g);
             } else {
-                genres += g + ", ";
+                genres.append(g).append(", ");
             }
             i++;
         }
-
-        System.out.println("3. Genres: " + genres);
+        System.out.println("3. Genres: " + genres.toString());
 
         System.out.println("4. Pages: " + book.getPages());
         System.out.println("5. Rating: " + book.getRating());
@@ -418,4 +434,25 @@ public class LibraryApp {
         scanner.nextLine();
     }
 
+    // save library to file
+    private void saveLibrary() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(library);
+            jsonWriter.close();
+            System.out.println("Saved library to " + JSON_FILE_PATH);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write file to " + JSON_FILE_PATH);
+        }
+    }
+
+    // load library from file
+    private void loadLibrary() {
+        try {
+            library = jsonReader.read();
+            System.out.println("Loaded library from " + JSON_FILE_PATH);
+        } catch (IOException e) {
+            System.out.println("Unable to read file from " + JSON_FILE_PATH);
+        }
+    }
 }

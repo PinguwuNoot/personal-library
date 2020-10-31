@@ -1,0 +1,28 @@
+{"books": [
+  {
+    "pages": 545,
+    "author": "Fyodor Dostoevsky",
+    "genres": [
+      "Fiction",
+      "Psychology",
+      "Philosophy",
+      "Crime"
+    ],
+    "rating": 10,
+    "title": "Crime and Punishment",
+    "complete": false
+  },
+  {
+    "pages": 200,
+    "author": "Viktor Frankl",
+    "genres": [
+      "Nonfiction",
+      "Psychology",
+      "Philosophy",
+      "Autobiography"
+    ],
+    "rating": 10,
+    "title": "Man's Search for Meaning",
+    "complete": true
+  }
+]}

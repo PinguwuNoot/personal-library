@@ -1,9 +1,14 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.List;
+import java.util.Objects;
 
 // Represents a book with a title, author, list of genres, pages, rating /10, and state of whether book has been read;
-public class Book {
+public class Book implements Writable {
     private String title;
     private String author;
     private List<String> genres;
@@ -88,5 +93,45 @@ public class Book {
 
     public boolean getComplete() {
         return complete;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Book book = (Book) o;
+        return pages == book.pages
+                && rating == book.rating
+                && complete == book.complete
+                && title.equals(book.title)
+                && author.equals(book.author)
+                && genres.equals(book.genres);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, author, genres, pages, rating, complete);
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject jsonBook = new JSONObject();
+
+        jsonBook.put("title", title);
+        jsonBook.put("author", author);
+        JSONArray jsonGenres = new JSONArray();
+        for (String g : genres) {
+            jsonGenres.put(g);
+        }
+        jsonBook.put("genres", jsonGenres);
+        jsonBook.put("pages", pages);
+        jsonBook.put("rating", rating);
+        jsonBook.put("complete", complete);
+
+        return jsonBook;
     }
 }
