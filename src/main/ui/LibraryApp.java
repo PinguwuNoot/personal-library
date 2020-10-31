@@ -434,7 +434,8 @@ public class LibraryApp {
         scanner.nextLine();
     }
 
-    // save library to file
+
+    // EFFECTS: save library to file
     private void saveLibrary() {
         try {
             jsonWriter.open();
@@ -446,7 +447,8 @@ public class LibraryApp {
         }
     }
 
-    // load library from file
+    // MODIFIES: this
+    // EFFECTS: load library from file
     private void loadLibrary() {
         try {
             library = jsonReader.read();
