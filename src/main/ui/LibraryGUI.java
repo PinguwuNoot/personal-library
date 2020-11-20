@@ -15,23 +15,18 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-// TODO: set layout of frame to BorderLayout and put every component in it
-// TODO
-// TODO
-// TODO
-// TODO
-// TODO
-// TODO: scrollable library when > 12 books added;
 public class LibraryGUI extends JFrame {
     private static final String DEFAULT_FONT_NAME = UIManager.getDefaults().getFont("TabbedPane.font").getFontName();
-    private static final Color bgColor = new Color(0xfdf6e3);
+    private static final Font BOOK_COVER_FONT = new Font(DEFAULT_FONT_NAME, Font.BOLD, 14);
+    private static final Font LABEL_FONT = new Font(DEFAULT_FONT_NAME, Font.BOLD, 24);
+    private static final Font FIELD_FONT = new Font(DEFAULT_FONT_NAME, Font.PLAIN, 20);
+    private static final Color BG_COLOR = new Color(0xFDF6E3);
+    private static final Color BOOK_COLOR = new Color(0xD2B48C);
     private static final int WIDTH = 1440;
     private static final int HEIGHT = 810;
-    private static final int MAIN_DISPLAY_WIDTH = WIDTH - 40;
-    private static final int MAIN_DISPLAY_HEIGHT = HEIGHT - 150;
-    private static final int EDGE_SPACE = 10;
-    private static final int TOP_BUTTON_HEIGHT = 30;
-    private static final int HEIGHT_SUB_TOP_BAR = HEIGHT - EDGE_SPACE - TOP_BUTTON_HEIGHT - 10;
+    private static final Dimension BOOK_LABEL_DIMENSIONS = new Dimension((WIDTH / 5) - 100, (HEIGHT / 3) - 52);
+    private static final Dimension BUTTONS_PANEL_DIMENSIONS = new Dimension(0, 350);
+
     private static final String JSON_FILE_PATH = "./data/library.json";
     private static final String GENRES_FIELD_FORMATTING = ", ";
     private static final String YES = "Yes";
@@ -49,9 +44,9 @@ public class LibraryGUI extends JFrame {
 
 //    private GridBagConstraints gc;
     private JPanel mainDisplay;
-    private JButton saveButton;
-    private JButton loadButton;
-    private JButton addButton;
+    private JScrollPane scrollPane;
+    private JPanel topBar;
+    private JPanel bottomBar;
 
     private JLabel titleLabel;
     private JTextField titleField;
@@ -73,9 +68,8 @@ public class LibraryGUI extends JFrame {
         initFields();
 
         initFrame();
-        initSaveButton();
-        initLoadButton();
-        initAddButton();
+        initTopBar();
+        initBottomBar();
         initMainDisplay();
 
         pack();
@@ -90,17 +84,27 @@ public class LibraryGUI extends JFrame {
 
     private void initFrame() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLayout(null);
+        setLayout(new BorderLayout());
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
 //        setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setResizable(false);
-        getContentPane().setBackground(bgColor);
+        setResizable(true);
+        getContentPane().setBackground(BG_COLOR);
     }
 
-    private void initSaveButton() {
-        saveButton = new JButton("Save");
+    private void initTopBar() {
+        topBar = new JPanel();
+        topBar.setLayout(new FlowLayout(FlowLayout.LEADING));
+        topBar.setBackground(BG_COLOR);
+
+        topBar.add(initSaveButton());
+        topBar.add(initLoadButton());
+
+        add(topBar, BorderLayout.PAGE_START);
+    }
+
+    private JButton initSaveButton() {
+        JButton saveButton = new JButton("Save");
         saveButton.setFocusable(false);
-        saveButton.setBounds(10, EDGE_SPACE, 100, TOP_BUTTON_HEIGHT);
         saveButton.setActionCommand("save");
         saveButton.addActionListener(new ActionListener() {
             @Override
@@ -109,34 +113,10 @@ public class LibraryGUI extends JFrame {
             }
         });
 
-        add(saveButton);
+        return saveButton;
     }
 
-    private void initLoadButton() {
-        loadButton = new JButton("Load");
-        loadButton.setFocusable(false);
-        loadButton.setBounds(120, EDGE_SPACE, 100, TOP_BUTTON_HEIGHT);
-        loadButton.setActionCommand("load");
-        loadButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                loadLibrary();
-                displayLibrary();
-            }
-        });
-
-        add(loadButton);
-    }
-
-    private void loadLibrary() {
-        try {
-            library = jsonReader.read();
-            System.out.println("Loaded library from " + JSON_FILE_PATH);
-        } catch (IOException e) {
-            System.out.println("Unable to read file from " + JSON_FILE_PATH);
-        }
-    }
-
+    // EFFECTS: save library to file
     private void saveLibrary() {
         try {
             jsonWriter.open();
@@ -148,12 +128,48 @@ public class LibraryGUI extends JFrame {
         }
     }
 
-    private void initAddButton() {
+    private JButton initLoadButton() {
+        JButton loadButton = new JButton("Load");
+        loadButton.setFocusable(false);
+        loadButton.setActionCommand("load");
+        loadButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent a) {
+                loadLibrary();
+                displayLibrary();
+            }
+        });
+
+        return loadButton;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: load library from file
+    private void loadLibrary() {
+        try {
+            library = jsonReader.read();
+            System.out.println("Loaded library from " + JSON_FILE_PATH);
+        } catch (IOException e) {
+            System.out.println("Unable to read file from " + JSON_FILE_PATH);
+        }
+    }
+
+    private void initBottomBar() {
+        bottomBar = new JPanel();
+        bottomBar.setLayout(new FlowLayout(FlowLayout.TRAILING));
+        bottomBar.setBackground(BG_COLOR);
+
+        bottomBar.add(initAddButton());
+
+        add(bottomBar, BorderLayout.PAGE_END);
+    }
+
+    private JButton initAddButton() {
 //        JPanel addButtonPanel = new JPanel(); // only if necessary to properly contain bottom of frame
 
-        addButton = new JButton("Add");
-        addButton.setBounds(WIDTH - 110, HEIGHT - 90, 80, 40);
-        addButton.setActionCommand("add");
+        JButton addButton = new JButton("+");
+        addButton.setFocusable(false);
+        addButton.setFont(LABEL_FONT);
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -161,7 +177,7 @@ public class LibraryGUI extends JFrame {
             }
         });
 
-        add(addButton);
+        return addButton;
     }
 
     // TODO: refactor into abstract class with displayCurrentBookPanel
@@ -171,36 +187,30 @@ public class LibraryGUI extends JFrame {
 
         mainDisplay.add(initNewBookInputsPanel(), BorderLayout.PAGE_START);
         mainDisplay.add(initNewBookButtonsPanel(), BorderLayout.PAGE_END);
-
-//        add(mainDisplay); // ?
     }
 
     private void setFrameVisibilityFalse() {
-        saveButton.setVisible(false);
-        loadButton.setVisible(false);
-        addButton.setVisible(false);
+        topBar.setVisible(false);
+        bottomBar.setVisible(false);
     }
 
     private void setFrameVisibilityTrue() {
-        saveButton.setVisible(true);
-        loadButton.setVisible(true);
-        addButton.setVisible(true);
+        topBar.setVisible(true);
+        bottomBar.setVisible(true);
     }
 
     private void setMainDisplayToBookPanel() {
         mainDisplay.removeAll();
         mainDisplay.updateUI();
-        mainDisplay.setSize(WIDTH - 500, HEIGHT_SUB_TOP_BAR - 315);
-        mainDisplay.setLocation((WIDTH - (WIDTH - 500)) / 2, (HEIGHT - (HEIGHT_SUB_TOP_BAR - 150)) / 2);
-        mainDisplay.setBackground(bgColor);
-        mainDisplay.setLayout(new BorderLayout(0, 25));
+        mainDisplay.setBackground(BG_COLOR);
+        mainDisplay.setLayout(new BorderLayout());
     }
 
     // TODO: refactor into abstract class
     private JPanel initNewBookInputsPanel() {
         JPanel inputsPanel = new JPanel();
         inputsPanel.setLayout(new BoxLayout(inputsPanel, BoxLayout.PAGE_AXIS));
-        inputsPanel.setBackground(bgColor); // comment out to see panel sections; temporary
+        inputsPanel.setBackground(BG_COLOR);
 
         initInputsPanelFields();
         optimizeInputsPanelFields();
@@ -225,19 +235,19 @@ public class LibraryGUI extends JFrame {
     }
 
     private void optimizeInputsPanelFields() {
-        titleLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
-        titleField.setFont(new Font(DEFAULT_FONT_NAME, Font.PLAIN, 18));
-        authorLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
-        authorField.setFont(new Font(DEFAULT_FONT_NAME, Font.PLAIN, 18));
-        genresLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
-        genresField.setFont(new Font(DEFAULT_FONT_NAME, Font.PLAIN, 18));
-        pagesLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
-        pagesField.setFont(new Font(DEFAULT_FONT_NAME, Font.PLAIN, 18));
-        ratingLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
-        ratingField.setFont(new Font(DEFAULT_FONT_NAME, Font.PLAIN, 18));
-        finishedLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        titleLabel.setFont(LABEL_FONT);
+        titleField.setFont(FIELD_FONT);
+        authorLabel.setFont(LABEL_FONT);
+        authorField.setFont(FIELD_FONT);
+        genresLabel.setFont(LABEL_FONT);
+        genresField.setFont(FIELD_FONT);
+        pagesLabel.setFont(LABEL_FONT);
+        pagesField.setFont(FIELD_FONT);
+        ratingLabel.setFont(LABEL_FONT);
+        ratingField.setFont(FIELD_FONT);
+        finishedLabel.setFont(LABEL_FONT);
+        finishedField.setFont(FIELD_FONT);
 
-        finishedField.setFont(new Font(DEFAULT_FONT_NAME, Font.PLAIN, 18));
         finishedField.setText(finishedField.isSelected() ? YES : NO);
         finishedField.addItemListener(new ItemListener() {
             @Override
@@ -265,9 +275,9 @@ public class LibraryGUI extends JFrame {
     // TODO: refactor into abstract class
     private JPanel initNewBookButtonsPanel() {
         JPanel buttonsPanel = new JPanel();
-        buttonsPanel.setLayout(new FlowLayout());
-        buttonsPanel.setPreferredSize(new Dimension(0, 45));
-        buttonsPanel.setBackground(bgColor);
+        buttonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        buttonsPanel.setPreferredSize(BUTTONS_PANEL_DIMENSIONS);
+        buttonsPanel.setBackground(BG_COLOR);
 
         buttonsPanel.add(initNewBookOkButton());
         buttonsPanel.add(initCancelButton());
@@ -277,6 +287,7 @@ public class LibraryGUI extends JFrame {
 
     private JButton initNewBookOkButton() {
         JButton okButton = new JButton("OK");
+        okButton.setFont(LABEL_FONT);
         okButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -284,7 +295,6 @@ public class LibraryGUI extends JFrame {
 
                 Book newBook = new Book(title, author, genres, pages, rating, finished);
                 library.addBook(newBook);
-//                saveLibrary();
 
                 displayLibrary();
             }
@@ -299,7 +309,7 @@ public class LibraryGUI extends JFrame {
         this.genres = getGenresFieldInput(genresField);
         this.pages = Integer.parseInt(pagesField.getText());
         this.rating = Integer.parseInt(ratingField.getText());
-        getFinishedFieldInput(finishedField);
+        this.finished = finishedField.isSelected();
     }
 
     private List<String> getGenresFieldInput(JTextField genresField) {
@@ -308,12 +318,9 @@ public class LibraryGUI extends JFrame {
         return Arrays.asList(genresArray);
     }
 
-    private void getFinishedFieldInput(JToggleButton finishedField) {
-        this.finished = finishedField.isSelected();
-    }
-
     private JButton initCancelButton() {
         JButton cancelButton = new JButton("Cancel");
+        cancelButton.setFont(LABEL_FONT);
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -324,37 +331,32 @@ public class LibraryGUI extends JFrame {
         return cancelButton;
     }
 
-    // TODO: JScrollPane
     private void initMainDisplay() {
 //        gc = new GridBagConstraints();
 
         mainDisplay = new JPanel();
-//        JScrollPane scrollPane = new JScrollPane(mainDisplay, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-//                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane = new JScrollPane(mainDisplay, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         displayLibrary();
-        add(mainDisplay);
-//        add(scrollPane, BorderLayout.CENTER);
+        add(scrollPane, BorderLayout.CENTER);
     }
 
     private void displayLibrary() {
-        // temporary
-        Border border = BorderFactory.createLineBorder(Color.BLACK, 3);
-        mainDisplay.setBorder(border);
-
         setFrameVisibilityTrue();
         resetMainDisplay();
         addEachBook();
 
-//        add(mainDisplay); // ?
+        // temporary
+//        Border border = BorderFactory.createLineBorder(Color.BLACK, 3);
+//        mainDisplay.setBorder(border);
     }
 
     private void resetMainDisplay() {
         mainDisplay.removeAll();
         mainDisplay.updateUI();
-        mainDisplay.setSize(MAIN_DISPLAY_WIDTH, MAIN_DISPLAY_HEIGHT);
-        mainDisplay.setLocation((WIDTH - MAIN_DISPLAY_WIDTH) / 2, HEIGHT - HEIGHT_SUB_TOP_BAR);
-        mainDisplay.setBackground(bgColor);
-        mainDisplay.setLayout(new FlowLayout(FlowLayout.LEADING, 65, 6));
+        mainDisplay.setBackground(BG_COLOR);
+        mainDisplay.setLayout(new WrapLayout(WrapLayout.LEADING, 80, 6));
+//        mainDisplay.setLayout(new FlowLayout(FlowLayout.LEADING, 80, 6));
 //        mainDisplay.setLayout(new GridLayout(3, 5, 85, 6));
 //        mainDisplay.setLayout(new GridBagLayout());
     }
@@ -392,20 +394,19 @@ public class LibraryGUI extends JFrame {
 
     private JLabel initBookLabel(Book b) {
         JLabel bookLabel = new JLabel();
-        bookLabel.setPreferredSize(new Dimension((MAIN_DISPLAY_WIDTH / 5) - 80, (MAIN_DISPLAY_HEIGHT / 3) - 10));
-        bookLabel.setFont(new Font(DEFAULT_FONT_NAME, Font.BOLD, 14));
+        bookLabel.setPreferredSize(BOOK_LABEL_DIMENSIONS);
+        bookLabel.setBorder(BorderFactory.createRaisedSoftBevelBorder());
+        bookLabel.setBackground(BOOK_COLOR);
+        bookLabel.setOpaque(true);
+        bookLabel.setFont(BOOK_COVER_FONT);
         bookLabel.setText(printBookCover(b));
         bookLabel.setHorizontalAlignment(JLabel.CENTER);
-
         bookLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 displayCurrentBookPanel(b);
             }
         });
-
-        Border border = BorderFactory.createLineBorder(Color.BLACK, 3); // temporary
-        bookLabel.setBorder(border); // temporary
 
         return bookLabel;
     }
@@ -414,15 +415,6 @@ public class LibraryGUI extends JFrame {
         String bookCover;
         this.title = b.getTitle();
         this.author = b.getAuthor();
-//        this.genres = b.getGenres();
-//        StringBuilder genresString = genresToString();
-//        this.pages = b.getPages();
-//        this.rating = b.getRating();
-//        this.finished = b.getFinished();
-//        String finishedString = finishedToString();
-//
-//        bookCover = "<html>" + this.title + "<br>" + this.author + "<br>" + genresString + "<br>" + this.pages +
-//        "<br>" + this.rating + "<br>" + finishedString;
 
         bookCover = "<html>" + this.title + "<br><br>" + this.author;
 
@@ -438,10 +430,11 @@ public class LibraryGUI extends JFrame {
         mainDisplay.add(initCurrentBookButtonsPanel(b), BorderLayout.PAGE_END);
     }
 
+    // TODO: refactor into abstract class
     private JPanel initCurrentBookInputsPanel(Book b) {
         JPanel inputsPanel = new JPanel();
         inputsPanel.setLayout(new BoxLayout(inputsPanel, BoxLayout.PAGE_AXIS));
-        inputsPanel.setBackground(bgColor); // comment out to see panel sections
+        inputsPanel.setBackground(BG_COLOR); // comment out to see panel sections
 
         initInputsPanelFields();
         optimizeInputsPanelFields();
@@ -486,18 +479,19 @@ public class LibraryGUI extends JFrame {
     private JPanel initCurrentBookButtonsPanel(Book b) {
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        buttonsPanel.setPreferredSize(new Dimension(0, 45));
-        buttonsPanel.setBackground(bgColor);
+        buttonsPanel.setPreferredSize(BUTTONS_PANEL_DIMENSIONS);
+        buttonsPanel.setBackground(BG_COLOR);
 
         buttonsPanel.add(initCurrentBookOkButton(b));
         buttonsPanel.add(initCancelButton());
-        buttonsPanel.add(initRemoveBookButton(b));
+        buttonsPanel.add(initDeleteBookButton(b));
 
         return buttonsPanel;
     }
 
     private JButton initCurrentBookOkButton(Book b) {
         JButton okButton = new JButton("OK");
+        okButton.setFont(LABEL_FONT);
         okButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -517,13 +511,14 @@ public class LibraryGUI extends JFrame {
         return okButton;
     }
 
-    private JPanel initRemoveBookButton(Book b) {
-        JPanel removeButtonPanel = new JPanel();
-        removeButtonPanel.setBackground(bgColor);
-        removeButtonPanel.setBorder(new EmptyBorder(0, 290, 0, 0));
+    private JPanel initDeleteBookButton(Book b) {
+        JPanel deleteButtonPanel = new JPanel();
+        deleteButtonPanel.setBackground(BG_COLOR);
+        deleteButtonPanel.setBorder(new EmptyBorder(0, 480, 0, 0));
 
-        JButton removeButton = new JButton("Remove");
-        removeButton.addActionListener(new ActionListener() {
+        JButton deleteButton = new JButton("Delete");
+        deleteButton.setFont(LABEL_FONT);
+        deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 library.removeBook(b);
@@ -532,25 +527,9 @@ public class LibraryGUI extends JFrame {
             }
         });
 
-        removeButtonPanel.add(removeButton);
+        deleteButtonPanel.add(deleteButton);
 
-        return removeButtonPanel;
-    }
-
-    public JPanel getMainDisplay() {
-        return mainDisplay;
-    }
-
-    public JButton getSaveButton() {
-        return saveButton;
-    }
-
-    public JButton getLoadButton() {
-        return loadButton;
-    }
-
-    public JButton getAddButton() {
-        return addButton;
+        return deleteButtonPanel;
     }
 
     public static void main(String[] args) {

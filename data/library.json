@@ -167,13 +167,5 @@
     "rating": 10,
     "finished": true,
     "title": "Man's Search for Meaning"
-  },
-  {
-    "pages": 0,
-    "author": "Crimes",
-    "genres": ["Music"],
-    "rating": 0,
-    "finished": false,
-    "title": "Jazz"
   }
 ]}
