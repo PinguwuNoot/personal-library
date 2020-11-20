@@ -14,7 +14,7 @@ class BookTest {
     private List<String> genres;
     private int pages;
     private int rating;
-    private boolean complete;
+    private boolean finished;
     private Book book;
 
     @BeforeEach
@@ -28,8 +28,8 @@ class BookTest {
         genres.add("Crime");
         pages = 545;
         rating = 9;
-        complete = false;
-        book = new Book(title, author, genres, pages, rating, complete);
+        finished = false;
+        book = new Book(title, author, genres, pages, rating, finished);
     }
 
     @Test
@@ -81,6 +81,26 @@ class BookTest {
     }
 
     @Test
+    void testSetGenres() {
+        List<String> newGenres = new ArrayList<>();
+        Book newBook = new Book(title, author, newGenres, pages, rating, finished);
+        assertTrue(newBook.getGenres().isEmpty());
+        assertFalse(newBook.getGenres().contains("Fiction"));
+        assertFalse(newBook.getGenres().contains("Philosophy"));
+        assertFalse(newBook.getGenres().contains("Psychology"));
+        assertFalse(newBook.getGenres().contains("Crime"));
+
+
+        newBook.setGenres(genres);
+        assertFalse(newBook.getGenres().isEmpty());
+        assertEquals(4, newBook.getGenres().size());
+        assertTrue(newBook.getGenres().contains("Fiction"));
+        assertTrue(newBook.getGenres().contains("Philosophy"));
+        assertTrue(newBook.getGenres().contains("Psychology"));
+        assertTrue(newBook.getGenres().contains("Crime"));
+    }
+
+    @Test
     void testSetPages() {
         assertEquals(545, book.getPages());
 
@@ -99,11 +119,20 @@ class BookTest {
     }
 
     @Test
-    void testToggleComplete() {
+    void testToggleFinished() {
         assertFalse(book.getFinished());
         book.toggleFinished();
         assertTrue(book.getFinished());
         book.toggleFinished();
         assertFalse(book.getFinished());
+    }
+
+    @Test
+    void testSetFinished() {
+        assertFalse(book.getFinished());
+        book.setFinished(true);
+        assertTrue(book.getFinished());
+        book.setFinished(true);
+        assertTrue(book.getFinished());
     }
 }
