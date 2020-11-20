@@ -16,17 +16,22 @@ import java.util.Arrays;
 import java.util.List;
 
 // TODO: set layout of frame to BorderLayout and put every component in it
+// TODO
+// TODO
+// TODO
+// TODO
+// TODO
 // TODO: scrollable library when > 12 books added;
-//       proper sizing when a few books are added as if 12 books were added
 public class LibraryGUI extends JFrame {
     private static final String DEFAULT_FONT_NAME = UIManager.getDefaults().getFont("TabbedPane.font").getFontName();
     private static final Color bgColor = new Color(0xfdf6e3);
     private static final int WIDTH = 1440;
     private static final int HEIGHT = 810;
     private static final int MAIN_DISPLAY_WIDTH = WIDTH - 50;
+    private static final int MAIN_DISPLAY_HEIGHT = HEIGHT - 150;
     private static final int EDGE_SPACE = 10;
     private static final int TOP_BUTTON_HEIGHT = 30;
-    private static final int HEIGHT_SUB_TOPBAR = HEIGHT - EDGE_SPACE - TOP_BUTTON_HEIGHT - 10;
+    private static final int HEIGHT_SUB_TOP_BAR = HEIGHT - EDGE_SPACE - TOP_BUTTON_HEIGHT - 10;
     private static final String JSON_FILE_PATH = "./data/library.json";
     private static final String GENRES_FIELD_FORMATTING = ", ";
     private static final String YES = "Yes";
@@ -42,8 +47,8 @@ public class LibraryGUI extends JFrame {
     private int rating;
     private boolean finished;
 
+//    private GridBagConstraints gc;
     private JPanel mainDisplay;
-    private GridBagConstraints gc;
     private JButton saveButton;
     private JButton loadButton;
     private JButton addButton;
@@ -165,8 +170,8 @@ public class LibraryGUI extends JFrame {
     private void setMainDisplayToBookPanel() {
         mainDisplay.removeAll();
         mainDisplay.updateUI();
-        mainDisplay.setSize(WIDTH - 500, HEIGHT_SUB_TOPBAR - 315);
-        mainDisplay.setLocation((WIDTH - (WIDTH - 500)) / 2, (HEIGHT - (HEIGHT_SUB_TOPBAR - 150)) / 2);
+        mainDisplay.setSize(WIDTH - 500, HEIGHT_SUB_TOP_BAR - 315);
+        mainDisplay.setLocation((WIDTH - (WIDTH - 500)) / 2, (HEIGHT - (HEIGHT_SUB_TOP_BAR - 150)) / 2);
         mainDisplay.setBackground(bgColor);
         mainDisplay.setLayout(new BorderLayout(0, 25));
     }
@@ -300,33 +305,31 @@ public class LibraryGUI extends JFrame {
     }
 
     private void initMainDisplay() {
-        mainDisplay = new JPanel(new GridBagLayout());
-        gc = new GridBagConstraints();
+//        gc = new GridBagConstraints();
+
+        mainDisplay = new JPanel();
         displayLibrary();
         add(mainDisplay);
     }
 
-    //
     private void displayLibrary() {
-        setFrameVisibilityTrue();
-        resetMainDisplay();
-
-
         // temporary
         Border border = BorderFactory.createLineBorder(Color.BLACK, 3);
         mainDisplay.setBorder(border);
 
-
+        setFrameVisibilityTrue();
+        resetMainDisplay();
         addEachBook();
+
 //        add(mainDisplay); // ?
     }
 
     private void loadLibrary() {
         try {
             library = jsonReader.read();
-//                    System.out.println("Loaded library from " + JSON_FILE_PATH);
+            System.out.println("Loaded library from " + JSON_FILE_PATH);
         } catch (IOException e) {
-//                    System.out.println("Unable to read file from " + JSON_FILE_PATH);
+            System.out.println("Unable to read file from " + JSON_FILE_PATH);
         }
     }
 
@@ -335,52 +338,57 @@ public class LibraryGUI extends JFrame {
             jsonWriter.open();
             jsonWriter.write(library);
             jsonWriter.close();
+            System.out.println("Saved library to " + JSON_FILE_PATH);
         } catch (FileNotFoundException e) {
-//            System.out.println("Unable to write file to " + JSON_FILE_PATH);
+            System.out.println("Unable to write file to " + JSON_FILE_PATH);
         }
     }
 
     private void resetMainDisplay() {
         mainDisplay.removeAll();
         mainDisplay.updateUI();
-        mainDisplay.setSize(MAIN_DISPLAY_WIDTH, HEIGHT_SUB_TOPBAR - 100);
-        mainDisplay.setLocation((WIDTH - (MAIN_DISPLAY_WIDTH)) / 2, HEIGHT - HEIGHT_SUB_TOPBAR);
+        mainDisplay.setSize(MAIN_DISPLAY_WIDTH, MAIN_DISPLAY_HEIGHT);
+        mainDisplay.setLocation((WIDTH - (MAIN_DISPLAY_WIDTH)) / 2, HEIGHT - HEIGHT_SUB_TOP_BAR);
         mainDisplay.setBackground(bgColor);
-        mainDisplay.setLayout(new GridBagLayout());
+        mainDisplay.setLayout(new FlowLayout(FlowLayout.LEADING, 65, 6));
+        //        mainDisplay.setLayout(new GridBagLayout());
     }
 
     private void addEachBook() {
         List<Book> books = library.getBooks();
 
-        int i = 0;
-        int j = 0;
         for (Book b : books) {
-            if (i > 4) {
-                i = 0;
-                j++;
-            }
-
-            setGridBagConstraints(i, j);
-            mainDisplay.add(initBookLabel(b), gc);
-
-            i++;
+            mainDisplay.add(initBookLabel(b));
         }
+
+//        int i = 0;
+//        int j = 0;
+//        for (Book b : books) {
+//            if (i > 4) {
+//                i = 0;
+//                j++;
+//            }
+//
+//            setGridBagConstraints(i, j);
+//            mainDisplay.add(initBookLabel(b), gc);
+//
+//            i++;
+//        }
     }
 
-    private void setGridBagConstraints(int i, int j) {
-        gc.gridx = i;
-        gc.gridy = j;
-        gc.weightx = 0.5;
-        gc.weighty = 0.5;
-        gc.fill = GridBagConstraints.BOTH;
-        gc.insets = new Insets(5, 50, 5, 30);
-    }
+//    private void setGridBagConstraints(int i, int j) {
+//        gc.gridx = i;
+//        gc.gridy = j;
+//        gc.weightx = 0.5;
+//        gc.weighty = 0.5;
+//        gc.fill = GridBagConstraints.BOTH;
+//        gc.insets = new Insets(5, 50, 5, 30);
+//    }
 
     private JLabel initBookLabel(Book b) {
         JLabel bookLabel = new JLabel();
-        bookLabel.setPreferredSize(new Dimension(0, 0));
+        bookLabel.setPreferredSize(new Dimension((MAIN_DISPLAY_WIDTH / 5) - 80, (MAIN_DISPLAY_HEIGHT / 3) - 10));
         bookLabel.setFont(new Font(DEFAULT_FONT_NAME, Font.BOLD, 14));
-
         bookLabel.setText(printBookCover(b));
         bookLabel.setHorizontalAlignment(JLabel.CENTER);
 
