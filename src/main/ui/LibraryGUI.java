@@ -27,7 +27,7 @@ public class LibraryGUI extends JFrame {
     private static final Color bgColor = new Color(0xfdf6e3);
     private static final int WIDTH = 1440;
     private static final int HEIGHT = 810;
-    private static final int MAIN_DISPLAY_WIDTH = WIDTH - 50;
+    private static final int MAIN_DISPLAY_WIDTH = WIDTH - 40;
     private static final int MAIN_DISPLAY_HEIGHT = HEIGHT - 150;
     private static final int EDGE_SPACE = 10;
     private static final int TOP_BUTTON_HEIGHT = 30;
@@ -91,7 +91,7 @@ public class LibraryGUI extends JFrame {
     private void initFrame() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(null);
-        setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        setMinimumSize(new Dimension(WIDTH, HEIGHT));
 //        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setResizable(false);
         getContentPane().setBackground(bgColor);
@@ -126,6 +126,26 @@ public class LibraryGUI extends JFrame {
         });
 
         add(loadButton);
+    }
+
+    private void loadLibrary() {
+        try {
+            library = jsonReader.read();
+            System.out.println("Loaded library from " + JSON_FILE_PATH);
+        } catch (IOException e) {
+            System.out.println("Unable to read file from " + JSON_FILE_PATH);
+        }
+    }
+
+    private void saveLibrary() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(library);
+            jsonWriter.close();
+            System.out.println("Saved library to " + JSON_FILE_PATH);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write file to " + JSON_FILE_PATH);
+        }
     }
 
     private void initAddButton() {
@@ -304,12 +324,16 @@ public class LibraryGUI extends JFrame {
         return cancelButton;
     }
 
+    // TODO: JScrollPane
     private void initMainDisplay() {
 //        gc = new GridBagConstraints();
 
         mainDisplay = new JPanel();
+//        JScrollPane scrollPane = new JScrollPane(mainDisplay, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+//                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         displayLibrary();
         add(mainDisplay);
+//        add(scrollPane, BorderLayout.CENTER);
     }
 
     private void displayLibrary() {
@@ -324,34 +348,15 @@ public class LibraryGUI extends JFrame {
 //        add(mainDisplay); // ?
     }
 
-    private void loadLibrary() {
-        try {
-            library = jsonReader.read();
-            System.out.println("Loaded library from " + JSON_FILE_PATH);
-        } catch (IOException e) {
-            System.out.println("Unable to read file from " + JSON_FILE_PATH);
-        }
-    }
-
-    private void saveLibrary() {
-        try {
-            jsonWriter.open();
-            jsonWriter.write(library);
-            jsonWriter.close();
-            System.out.println("Saved library to " + JSON_FILE_PATH);
-        } catch (FileNotFoundException e) {
-            System.out.println("Unable to write file to " + JSON_FILE_PATH);
-        }
-    }
-
     private void resetMainDisplay() {
         mainDisplay.removeAll();
         mainDisplay.updateUI();
         mainDisplay.setSize(MAIN_DISPLAY_WIDTH, MAIN_DISPLAY_HEIGHT);
-        mainDisplay.setLocation((WIDTH - (MAIN_DISPLAY_WIDTH)) / 2, HEIGHT - HEIGHT_SUB_TOP_BAR);
+        mainDisplay.setLocation((WIDTH - MAIN_DISPLAY_WIDTH) / 2, HEIGHT - HEIGHT_SUB_TOP_BAR);
         mainDisplay.setBackground(bgColor);
         mainDisplay.setLayout(new FlowLayout(FlowLayout.LEADING, 65, 6));
-        //        mainDisplay.setLayout(new GridBagLayout());
+//        mainDisplay.setLayout(new GridLayout(3, 5, 85, 6));
+//        mainDisplay.setLayout(new GridBagLayout());
     }
 
     private void addEachBook() {
