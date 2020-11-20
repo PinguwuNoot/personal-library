@@ -6,7 +6,6 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
@@ -44,7 +43,6 @@ public class LibraryGUI extends JFrame {
 
 //    private GridBagConstraints gc;
     private JPanel mainDisplay;
-    private JScrollPane scrollPane;
     private JPanel topBar;
     private JPanel bottomBar;
 
@@ -335,7 +333,7 @@ public class LibraryGUI extends JFrame {
 //        gc = new GridBagConstraints();
 
         mainDisplay = new JPanel();
-        scrollPane = new JScrollPane(mainDisplay, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+        JScrollPane scrollPane = new JScrollPane(mainDisplay, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         displayLibrary();
         add(scrollPane, BorderLayout.CENTER);
