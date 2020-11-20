@@ -5,7 +5,11 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import java.util.List;
-import java.util.Objects;
+
+/*
+INVARIANT: pages > 0;
+           0 <= rating <= 10
+ */
 
 // Represents a book with a title, author, list of genres, pages, rating /10, and state of whether book has been read;
 public class Book implements Writable {
@@ -14,12 +18,11 @@ public class Book implements Writable {
     private List<String> genres;
     private int pages;
     private int rating;
-    private boolean complete;
+    private boolean finished;
 
-    // REQUIRES: pages > 0; 0 <= rating <= 10
     // EFFECTS: Creates a new book with given title, author, list of genres, pages, rating /10, and state of whether
     //          book has been read;
-    public Book(String title, String author, List<String> genres, int pages, int rating, boolean complete) {
+    public Book(String title, String author, List<String> genres, int pages, int rating, boolean finished) {
         this.title = title;
         this.author = author;
         //this.author = new Author(author);
@@ -32,7 +35,7 @@ public class Book implements Writable {
 
         this.pages = pages;
         this.rating = rating;
-        this.complete = complete;
+        this.finished = finished;
     }
 
     public void setTitle(String title) {
@@ -57,6 +60,10 @@ public class Book implements Writable {
         genres.remove(genre);
     }
 
+    public void setGenres(List<String> genres) {
+        this.genres = genres;
+    }
+
     public void setPages(int pages) {
         this.pages = pages;
     }
@@ -66,9 +73,13 @@ public class Book implements Writable {
     }
 
     // MODIFIES: this
-    // EFFECTS: if complete is true, set to false; if complete is false, set to true
-    public void toggleComplete() {
-        complete = !complete;
+    // EFFECTS: if finished is true, set to false; if finished is false, set to true
+    public void toggleFinished() {
+        finished = !finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
     }
 
     public String getTitle() {
@@ -91,8 +102,8 @@ public class Book implements Writable {
         return rating;
     }
 
-    public boolean getComplete() {
-        return complete;
+    public boolean getFinished() {
+        return finished;
     }
 
 //    @Override
@@ -117,6 +128,7 @@ public class Book implements Writable {
 //        return Objects.hash(title, author, genres, pages, rating, complete);
 //    }
 
+    // EFFECTS: converts and returns book as a json object
     @Override
     public JSONObject toJson() {
         JSONObject jsonBook = new JSONObject();
@@ -130,7 +142,7 @@ public class Book implements Writable {
         jsonBook.put("genres", jsonGenres);
         jsonBook.put("pages", pages);
         jsonBook.put("rating", rating);
-        jsonBook.put("complete", complete);
+        jsonBook.put("finished", finished);
 
         return jsonBook;
     }

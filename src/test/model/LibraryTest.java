@@ -69,7 +69,7 @@ class LibraryTest {
     }
 
     @Test
-    void testGetAllBooks() {
+    void testGetBooks() {
         List<Book> listOfBooks = new ArrayList<>();
         assertEquals(listOfBooks, books.getBooks());
 

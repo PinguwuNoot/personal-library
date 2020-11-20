@@ -45,6 +45,7 @@ public class Library implements Writable {
         return books;
     }
 
+    // EFFECTS: converts and returns library as a json object
     @Override
     public JSONObject toJson() {
         JSONObject jsonLibrary = new JSONObject();
@@ -53,6 +54,7 @@ public class Library implements Writable {
         return jsonLibrary;
     }
 
+    // EFFECTS: converts and returns library books as a json array
     private JSONArray booksToJson() {
         JSONArray jsonBooks = new JSONArray();
 

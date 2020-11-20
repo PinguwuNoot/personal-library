@@ -9,8 +9,8 @@
       "Crime"
     ],
     "rating": 10,
-    "title": "Crime and Punishment",
-    "complete": false
+    "finished": false,
+    "title": "Crime and Punishment"
   },
   {
     "pages": 200,
@@ -22,7 +22,7 @@
       "Autobiography"
     ],
     "rating": 10,
-    "title": "Man's Search for Meaning",
-    "complete": true
+    "finished": true,
+    "title": "Man's Search for Meaning"
   }
 ]}

@@ -6,7 +6,7 @@
       "genres": ["Fiction", "Psychology", "Philosophy", "Crime"],
       "pages": 545,
       "rating": 10,
-      "complete": false
+      "finished": false
     },
     {
       "title": "Man's Search for Meaning",
@@ -14,7 +14,7 @@
       "genres": ["Nonfiction", "Psychology", "Philosophy", "Autobiography"],
       "pages": 200,
       "rating": 10,
-      "complete": true
+      "finished": true
     }
   ]
 }

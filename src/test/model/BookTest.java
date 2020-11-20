@@ -39,7 +39,7 @@ class BookTest {
         assertEquals(genres, book.getGenres());
         assertEquals(545, book.getPages());
         assertEquals(9, book.getRating());
-        assertFalse(book.getComplete());
+        assertFalse(book.getFinished());
     }
 
     @Test
@@ -100,10 +100,10 @@ class BookTest {
 
     @Test
     void testToggleComplete() {
-        assertFalse(book.getComplete());
-        book.toggleComplete();
-        assertTrue(book.getComplete());
-        book.toggleComplete();
-        assertFalse(book.getComplete());
+        assertFalse(book.getFinished());
+        book.toggleFinished();
+        assertTrue(book.getFinished());
+        book.toggleFinished();
+        assertFalse(book.getFinished());
     }
 }

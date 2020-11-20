@@ -41,11 +41,11 @@ public class LibraryApp {
 //        genres.add("Crime");
 //        int pages = 545;
 //        int rating = 9;
-//        boolean complete = false;
+//        boolean finished = false;
 //
-//        Book testBook = new Book(title, author, genres, pages, rating, complete);
+//        Book testBook = new Book(title, author, genres, pages, rating, finished);
 //        library.addBook(testBook);
-//        Book testBook1 = new Book("Different Title", "Different Author", genres, pages, rating, complete);
+//        Book testBook1 = new Book("Different Title", "Different Author", genres, pages, rating, finished);
 //        library.addBook(testBook1);
     }
 
@@ -77,7 +77,8 @@ public class LibraryApp {
 
     // EFFECTS: display list of options in library
     private void displayMenu() {
-        System.out.println("\n1. Add book to library");
+        System.out.println("\nChoose option:");
+        System.out.println("1. Add book to library");
         System.out.println("2. Remove book from library");
         System.out.println("3. View book information");
         System.out.println("4. Edit book information");
@@ -128,9 +129,9 @@ public class LibraryApp {
 
         System.out.print("\nHave you read this book? (y/n) ");
         String input = scanner.nextLine();
-        boolean complete = input.toLowerCase().equals("y");
+        boolean finished = input.toLowerCase().equals("y");
 
-        Book book = new Book(title, author, genres, pages, rating, complete);
+        Book book = new Book(title, author, genres, pages, rating, finished);
         library.addBook(book);
     }
 
@@ -207,16 +208,16 @@ public class LibraryApp {
 //
 //            System.out.println("\n(Enter 'cancel' to cancel)\nHave you finished this book? (y/n)");
 //            String input = scanner.next();
-//            boolean complete;
+//            boolean finished;
 //            if (input.toLowerCase().equals("cancel")) {
 //                cancel = true;
 //            } else if (input.toLowerCase().equals("y")) {
-//                complete = true;
+//                finished = true;
 //            } else if (input.toLowerCase().equals("n")) {
-//                complete = false;
+//                finished = false;
 //            }
 //
-//            Book book = new Book(title, author, genres, pages, rating, complete);
+//            Book book = new Book(title, author, genres, pages, rating, finished);
 //            library.addBook(book);
 //            break;
 //        }
@@ -295,10 +296,10 @@ public class LibraryApp {
         System.out.println("Pages: " + book.getPages());
         System.out.println("Rating: " + book.getRating());
 
-        if (book.getComplete()) {
-            System.out.println("Finished");
+        if (book.getFinished()) {
+            System.out.println("Finished?: Yes");
         } else {
-            System.out.println("Unfinished");
+            System.out.println("Finished?: No");
         }
     }
 
@@ -349,7 +350,7 @@ public class LibraryApp {
         } else if (input == 5) {
             editRating(book);
         } else if (input == 6) {
-            book.toggleComplete();
+            book.toggleFinished();
         }
     }
 
@@ -373,10 +374,10 @@ public class LibraryApp {
         System.out.println("4. Pages: " + book.getPages());
         System.out.println("5. Rating: " + book.getRating());
 
-        if (book.getComplete()) {
-            System.out.println("6. Finished");
+        if (book.getFinished()) {
+            System.out.println("6. Finished?: Yes");
         } else {
-            System.out.println("6. Unfinished");
+            System.out.println("6. Finished?: No");
         }
     }
 
@@ -456,5 +457,9 @@ public class LibraryApp {
         } catch (IOException e) {
             System.out.println("Unable to read file from " + JSON_FILE_PATH);
         }
+    }
+
+    public static void main(String[] args) {
+        new LibraryApp();
     }
 }

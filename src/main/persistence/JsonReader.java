@@ -74,9 +74,9 @@ public class JsonReader {
 
         int pages = jsonBook.getInt("pages");
         int rating = jsonBook.getInt("rating");
-        boolean complete = jsonBook.getBoolean("complete");
+        boolean finished = jsonBook.getBoolean("finished");
 
-        Book book = new Book(title, author, genres, pages, rating, complete);
+        Book book = new Book(title, author, genres, pages, rating, finished);
         library.addBook(book);
     }
 }
