@@ -1,4 +1,4 @@
-# <img src="C:\Users\hanjs\Desktop\MyFiles\UBC\CPSC 210\Personal Project\project_c4g3b\data\book.png" alt="book" style="zoom:4%;" /> Personal Library
+# Personal Library
 
 The application that I will be creating is a basic library application that saves and stores a collection of books. This application will be useful to anyone that enjoys reading and anyone that would benefit from being able to organize their current list of books. 
 
