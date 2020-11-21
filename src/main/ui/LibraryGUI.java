@@ -533,7 +533,6 @@ public class LibraryGUI extends JFrame {
         return buttonsPanel;
     }
 
-    // MODIFIES: this
     // EFFECTS: initializes a new button to take inputs and edit book's values based on inputs
     private JButton initCurrentBookOkButton(Book b) {
         JButton okButton = new JButton("OK");
@@ -557,7 +556,6 @@ public class LibraryGUI extends JFrame {
         return okButton;
     }
 
-    // MODIFIES: this
     // EFFECTS: initializes a new button to delete book from library
     private JPanel initDeleteBookButton(Book b) {
         JPanel deleteButtonPanel = new JPanel();
