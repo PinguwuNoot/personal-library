@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+// GUI application for library
 public class LibraryGUI extends JFrame {
     private static final String DEFAULT_FONT_NAME = UIManager.getDefaults().getFont("TabbedPane.font").getFontName();
     private static final Font BOOK_COVER_FONT = new Font(DEFAULT_FONT_NAME, Font.BOLD, 14);
@@ -74,12 +75,16 @@ public class LibraryGUI extends JFrame {
         setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes non-GUI fields
     private void initFields() {
         library = new Library();
         jsonReader = new JsonReader(JSON_FILE_PATH);
         jsonWriter = new JsonWriter(JSON_FILE_PATH);
     }
 
+    // MODIFIES: this
+    // EFFECTS: draws main frame
     private void initFrame() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
@@ -89,6 +94,8 @@ public class LibraryGUI extends JFrame {
         getContentPane().setBackground(BG_COLOR);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes and draws top bar of frame and adds to frame
     private void initTopBar() {
         topBar = new JPanel();
         topBar.setLayout(new FlowLayout(FlowLayout.LEADING));
@@ -100,6 +107,7 @@ public class LibraryGUI extends JFrame {
         add(topBar, BorderLayout.PAGE_START);
     }
 
+    // EFFECTS: initializes a new save button to be used in the top bar
     private JButton initSaveButton() {
         JButton saveButton = new JButton("Save");
         saveButton.setFocusable(false);
@@ -114,7 +122,7 @@ public class LibraryGUI extends JFrame {
         return saveButton;
     }
 
-    // EFFECTS: save library to file
+    // EFFECTS: saves library to file
     private void saveLibrary() {
         try {
             jsonWriter.open();
@@ -126,6 +134,7 @@ public class LibraryGUI extends JFrame {
         }
     }
 
+    // EFFECTS: initializes a new load button to be used in the top bar
     private JButton initLoadButton() {
         JButton loadButton = new JButton("Load");
         loadButton.setFocusable(false);
@@ -142,7 +151,7 @@ public class LibraryGUI extends JFrame {
     }
 
     // MODIFIES: this
-    // EFFECTS: load library from file
+    // EFFECTS: loads library from file
     private void loadLibrary() {
         try {
             library = jsonReader.read();
@@ -152,6 +161,8 @@ public class LibraryGUI extends JFrame {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes and draws bottom bar of frame and adds to frame
     private void initBottomBar() {
         bottomBar = new JPanel();
         bottomBar.setLayout(new FlowLayout(FlowLayout.TRAILING));
@@ -162,9 +173,8 @@ public class LibraryGUI extends JFrame {
         add(bottomBar, BorderLayout.PAGE_END);
     }
 
+    // EFFECTS: initializes a new add button to be used in the bottom bar
     private JButton initAddButton() {
-//        JPanel addButtonPanel = new JPanel(); // only if necessary to properly contain bottom of frame
-
         JButton addButton = new JButton("+");
         addButton.setFocusable(false);
         addButton.setFont(LABEL_FONT);
@@ -178,7 +188,8 @@ public class LibraryGUI extends JFrame {
         return addButton;
     }
 
-    // TODO: refactor into abstract class with displayCurrentBookPanel
+    // MODIFIES: this
+    // EFFECTS: redraws frame components to add a new book
     private void displayAddBookPanel() {
         setFrameVisibilityFalse();
         setMainDisplayToBookPanel();
@@ -187,16 +198,21 @@ public class LibraryGUI extends JFrame {
         mainDisplay.add(initNewBookButtonsPanel(), BorderLayout.PAGE_END);
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets top and bottom bars to invisible
     private void setFrameVisibilityFalse() {
         topBar.setVisible(false);
         bottomBar.setVisible(false);
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets top and bottom bars to visible
     private void setFrameVisibilityTrue() {
         topBar.setVisible(true);
         bottomBar.setVisible(true);
     }
 
+    // redraws main display to a book panel
     private void setMainDisplayToBookPanel() {
         mainDisplay.removeAll();
         mainDisplay.updateUI();
@@ -204,7 +220,7 @@ public class LibraryGUI extends JFrame {
         mainDisplay.setLayout(new BorderLayout());
     }
 
-    // TODO: refactor into abstract class
+    // EFFECTS: initializes and draws a new panel for input labels and text fields in book panel
     private JPanel initNewBookInputsPanel() {
         JPanel inputsPanel = new JPanel();
         inputsPanel.setLayout(new BoxLayout(inputsPanel, BoxLayout.PAGE_AXIS));
@@ -217,6 +233,8 @@ public class LibraryGUI extends JFrame {
         return inputsPanel;
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes inputs panel label and text field fields
     private void initInputsPanelFields() {
         titleLabel = new JLabel("Title");
         titleField = new JTextField("");
@@ -232,6 +250,8 @@ public class LibraryGUI extends JFrame {
         finishedField = new JToggleButton();
     }
 
+    // MODIFIES: this
+    // EFFECTS: draws inputs panel labels and text fields
     private void optimizeInputsPanelFields() {
         titleLabel.setFont(LABEL_FONT);
         titleField.setFont(FIELD_FONT);
@@ -255,6 +275,8 @@ public class LibraryGUI extends JFrame {
         });
     }
 
+    // MODIFIES: inputsPanel
+    // EFFECTS: adds all labels and text fields to inputs panel
     private void addToInputsPanel(JPanel inputsPanel) {
         inputsPanel.add(titleLabel);
         inputsPanel.add(titleField);
@@ -270,7 +292,7 @@ public class LibraryGUI extends JFrame {
         inputsPanel.add(finishedField);
     }
 
-    // TODO: refactor into abstract class
+    // EFFECTS: initializes and draws a new panel for bottom buttons in book panel
     private JPanel initNewBookButtonsPanel() {
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -283,6 +305,7 @@ public class LibraryGUI extends JFrame {
         return buttonsPanel;
     }
 
+    // EFFECTS: initializes a new button to take inputs and add new book based on inputs
     private JButton initNewBookOkButton() {
         JButton okButton = new JButton("OK");
         okButton.setFont(LABEL_FONT);
@@ -301,6 +324,8 @@ public class LibraryGUI extends JFrame {
         return okButton;
     }
 
+    // MODIFIES: this
+    // EFFECTS: gets all the inputs from the text field inputs
     private void getInputsInInputsPanel() {
         this.title = titleField.getText();
         this.author = authorField.getText();
@@ -310,12 +335,14 @@ public class LibraryGUI extends JFrame {
         this.finished = finishedField.isSelected();
     }
 
+    // EFFECTS: parses genres field input as a string array list
     private List<String> getGenresFieldInput(JTextField genresField) {
         String[] genresArray = genresField.getText().split(GENRES_FIELD_FORMATTING);
 
         return Arrays.asList(genresArray);
     }
 
+    // EFFECTS: initializes a new button to cancel from book panel and return to main library
     private JButton initCancelButton() {
         JButton cancelButton = new JButton("Cancel");
         cancelButton.setFont(LABEL_FONT);
@@ -329,6 +356,8 @@ public class LibraryGUI extends JFrame {
         return cancelButton;
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes main display of frame and adds to a scroll pane, then adds scroll pane to frame
     private void initMainDisplay() {
 //        gc = new GridBagConstraints();
 
@@ -339,6 +368,8 @@ public class LibraryGUI extends JFrame {
         add(scrollPane, BorderLayout.CENTER);
     }
 
+    // MODIFIES: this
+    // EFFECTS: draws main library
     private void displayLibrary() {
         setFrameVisibilityTrue();
         resetMainDisplay();
@@ -349,6 +380,8 @@ public class LibraryGUI extends JFrame {
 //        mainDisplay.setBorder(border);
     }
 
+    // MODIFIES: this
+    // EFFECTS: redraws main display panel to display main library
     private void resetMainDisplay() {
         mainDisplay.removeAll();
         mainDisplay.updateUI();
@@ -359,6 +392,8 @@ public class LibraryGUI extends JFrame {
 //        mainDisplay.setLayout(new GridBagLayout());
     }
 
+    // MODIFIES: this
+    // EFFECTS: draws each book in library and adds to main display
     private void addEachBook() {
         List<Book> books = library.getBooks();
 
@@ -390,6 +425,7 @@ public class LibraryGUI extends JFrame {
 //        gc.insets = new Insets(5, 50, 5, 30);
 //    }
 
+    // EFFECTS: initializes and draws a new label to display a book
     private JLabel initBookLabel(Book b) {
         JLabel bookLabel = new JLabel();
         bookLabel.setPreferredSize(BOOK_LABEL_DIMENSIONS);
@@ -409,6 +445,8 @@ public class LibraryGUI extends JFrame {
         return bookLabel;
     }
 
+    // MODIFIES: this
+    // EFFECTS: gets title and author from book and converts it into a string for book label
     private String printBookCover(Book b) {
         String bookCover;
         this.title = b.getTitle();
@@ -419,7 +457,8 @@ public class LibraryGUI extends JFrame {
         return bookCover;
     }
 
-    // TODO: refactor into abstract class with displayAddBookPanel
+    // MODIFIES: this
+    // EFFECTS: redraws frame components to view, edit, or delete a book
     private void displayCurrentBookPanel(Book b) {
         setFrameVisibilityFalse();
         setMainDisplayToBookPanel();
@@ -428,7 +467,9 @@ public class LibraryGUI extends JFrame {
         mainDisplay.add(initCurrentBookButtonsPanel(b), BorderLayout.PAGE_END);
     }
 
-    // TODO: refactor into abstract class
+    // MODIFIES: this
+    // EFFECTS: initializes and draws a new panel for input labels and text fields in book panel;
+    //          sets text fields to the book's values
     private JPanel initCurrentBookInputsPanel(Book b) {
         JPanel inputsPanel = new JPanel();
         inputsPanel.setLayout(new BoxLayout(inputsPanel, BoxLayout.PAGE_AXIS));
@@ -442,6 +483,9 @@ public class LibraryGUI extends JFrame {
         return inputsPanel;
     }
 
+    // MODIFIES: this
+    // EFFECTS: gets book's title, author, list of genres, pages, rating, and finished values, and sets them to the
+    // text fields of panel
     private void setInputsPanelFields(Book b) {
         this.title = b.getTitle();
         this.author = b.getAuthor();
@@ -458,6 +502,7 @@ public class LibraryGUI extends JFrame {
         finishedField.setSelected(this.finished);
     }
 
+    // EFFECTS: converts list of genres to a string to put in the text field
     private String genresToString() {
         StringBuilder genresString = new StringBuilder();
 
@@ -474,6 +519,7 @@ public class LibraryGUI extends JFrame {
         return genresString.toString();
     }
 
+    // EFFECTS: initializes and draws a new panel for bottom buttons in book panel
     private JPanel initCurrentBookButtonsPanel(Book b) {
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -487,6 +533,8 @@ public class LibraryGUI extends JFrame {
         return buttonsPanel;
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes a new button to take inputs and edit book's values based on inputs
     private JButton initCurrentBookOkButton(Book b) {
         JButton okButton = new JButton("OK");
         okButton.setFont(LABEL_FONT);
@@ -509,6 +557,8 @@ public class LibraryGUI extends JFrame {
         return okButton;
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes a new button to delete book from library
     private JPanel initDeleteBookButton(Book b) {
         JPanel deleteButtonPanel = new JPanel();
         deleteButtonPanel.setBackground(BG_COLOR);
