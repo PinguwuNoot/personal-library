@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 
 // Library application
-public class LibraryApp {
+public class LibraryConsoleUI {
     private static final String JSON_FILE_PATH = "./data/library.json";
     private Library library;
     private Scanner scanner;
@@ -19,7 +19,7 @@ public class LibraryApp {
     JsonReader jsonReader;
 
     // EFFECTS: Runs the library application
-    public LibraryApp() {
+    public LibraryConsoleUI() {
         init();
         jsonWriter = new JsonWriter(JSON_FILE_PATH);
         jsonReader = new JsonReader(JSON_FILE_PATH);
@@ -460,6 +460,6 @@ public class LibraryApp {
     }
 
     public static void main(String[] args) {
-        new LibraryApp();
+        new LibraryConsoleUI();
     }
 }
