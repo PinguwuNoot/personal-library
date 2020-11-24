@@ -13,9 +13,9 @@ import static ui.gui.LibraryGUI.*;
 public class CurrentBookPanel extends BookPanel {
     private Book book;
 
-    public CurrentBookPanel(LibraryGUI libraryGUI) {
+    public CurrentBookPanel(LibraryGUI libraryGUI, Book book) {
         super(libraryGUI);
-        book = libraryGUI.getBook();
+        this.book = book;
     }
 
     @Override
@@ -36,19 +36,19 @@ public class CurrentBookPanel extends BookPanel {
     // EFFECTS: gets book's title, author, list of genres, pages, rating, and finished values, and sets them to the
     // text fields of panel
     private void setInputsPanelFields() {
-        this.title = book.getTitle();
-        this.author = book.getAuthor();
-        this.genres = book.getGenres();
-        this.pages = book.getPages();
-        this.rating = book.getRating();
-        this.finished = book.getFinished();
+        title = book.getTitle();
+        author = book.getAuthor();
+        genres = book.getGenres();
+        pages = book.getPages();
+        rating = book.getRating();
+        finished = book.getFinished();
 
-        titleField.setText(this.title);
-        authorField.setText(this.author);
+        titleField.setText(title);
+        authorField.setText(author);
         genresField.setText(genresToString());
-        pagesField.setText(String.valueOf(this.pages));
-        ratingField.setText(String.valueOf(this.rating));
-        finishedField.setSelected(this.finished);
+        pagesField.setText(String.valueOf(pages));
+        ratingField.setText(String.valueOf(rating));
+        finishedField.setSelected(finished);
     }
 
     // EFFECTS: converts list of genres to a string to put in the text field
@@ -56,8 +56,8 @@ public class CurrentBookPanel extends BookPanel {
         StringBuilder genresString = new StringBuilder();
 
         int i = 1;
-        for (String g : this.genres) {
-            if (i == this.genres.size()) {
+        for (String g : genres) {
+            if (i == genres.size()) {
                 genresString.append(g);
             } else {
                 genresString.append(g).append(GENRES_FIELD_FORMATTING);

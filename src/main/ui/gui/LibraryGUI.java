@@ -6,12 +6,10 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 // GUI application for library
@@ -33,15 +31,13 @@ public class LibraryGUI extends JFrame {
     protected static final String NO = "No";
 
     private Library library;
-    private Book book;
+//    private Book book;
     private JsonReader jsonReader;
     private JsonWriter jsonWriter;
-    private String title;
-    private String author;
-    private List<String> genres;
-    private int pages;
-    private int rating;
-    private boolean finished;
+//    private List<String> genres;
+//    private int pages;
+//    private int rating;
+//    private boolean finished;
 
 //    private GridBagConstraints gc;
     private LibraryGUI libraryGUI;
@@ -50,18 +46,18 @@ public class LibraryGUI extends JFrame {
     private JPanel bottomBar;
     private BookPanel bookPanel;
 
-    private static JLabel titleLabel;
-    private static JTextField titleField;
-    private static JLabel authorLabel;
-    private static JTextField authorField;
-    private static JLabel genresLabel;
-    private static JTextField genresField;
-    private static JLabel pagesLabel;
-    private static JTextField pagesField;
-    private static JLabel ratingLabel;
-    private static JTextField ratingField;
-    private static JLabel finishedLabel;
-    private static JToggleButton finishedField;
+//    private static JLabel titleLabel;
+//    private static JTextField titleField;
+//    private static JLabel authorLabel;
+//    private static JTextField authorField;
+//    private static JLabel genresLabel;
+//    private static JTextField genresField;
+//    private static JLabel pagesLabel;
+//    private static JTextField pagesField;
+//    private static JLabel ratingLabel;
+//    private static JTextField ratingField;
+//    private static JLabel finishedLabel;
+//    private static JToggleButton finishedField;
 
     // EFFECTS: runs library application
     public LibraryGUI() {
@@ -185,10 +181,8 @@ public class LibraryGUI extends JFrame {
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                bookPanel = new AddBookPanel(libraryGUI); //TODO
+                bookPanel = new AddBookPanel(libraryGUI);
                 bookPanel.displayBookPanel();
-
-//                displayAddBookPanel();
             }
         });
 
@@ -358,6 +352,7 @@ public class LibraryGUI extends JFrame {
 //    }
     //TODO: REFACTORED OUT
 
+
     // MODIFIES: this
     // EFFECTS: initializes main display of frame and adds to a scroll pane, then adds scroll pane to frame
     private void initMainDisplay() {
@@ -390,6 +385,13 @@ public class LibraryGUI extends JFrame {
     }
 
     // MODIFIES: this
+    // EFFECTS: sets top and bottom bars to invisible
+    protected void setFrameVisibilityFalse() {
+        topBar.setVisible(false);
+        bottomBar.setVisible(false);
+    }
+
+    // MODIFIES: this
     // EFFECTS: redraws main display panel to display main library
     private void resetMainDisplay() {
         mainDisplay.removeAll();
@@ -407,8 +409,7 @@ public class LibraryGUI extends JFrame {
         List<Book> books = library.getBooks();
 
         for (Book b : books) {
-            book = b;
-            mainDisplay.add(initBookLabel());
+            mainDisplay.add(initBookLabel(b));
         }
 
 //        int i = 0;
@@ -436,22 +437,20 @@ public class LibraryGUI extends JFrame {
 //    }
 
     // EFFECTS: initializes and draws a new label to display a book
-    private JLabel initBookLabel() {
+    private JLabel initBookLabel(Book b) {
         JLabel bookLabel = new JLabel();
         bookLabel.setPreferredSize(BOOK_LABEL_DIMENSIONS);
         bookLabel.setBorder(BorderFactory.createRaisedSoftBevelBorder());
         bookLabel.setBackground(BOOK_COLOR);
         bookLabel.setOpaque(true);
         bookLabel.setFont(BOOK_COVER_FONT);
-        bookLabel.setText(printBookCover());
+        bookLabel.setText(printBookCover(b));
         bookLabel.setHorizontalAlignment(JLabel.CENTER);
         bookLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                bookPanel = new CurrentBookPanel(libraryGUI); //TODO
+                bookPanel = new CurrentBookPanel(libraryGUI, b);
                 bookPanel.displayBookPanel();
-
-//                displayCurrentBookPanel();
             }
         });
 
@@ -460,12 +459,12 @@ public class LibraryGUI extends JFrame {
 
     // MODIFIES: this
     // EFFECTS: gets title and author from book and converts it into a string for book label
-    private String printBookCover() {
+    private String printBookCover(Book b) {
         String bookCover;
-        this.title = book.getTitle();
-        this.author = book.getAuthor();
+        String title = b.getTitle();
+        String author = b.getAuthor();
 
-        bookCover = "<html>" + this.title + "<br><br>" + this.author;
+        bookCover = "<html>" + title + "<br><br>" + author;
 
         return bookCover;
     }
@@ -598,20 +597,8 @@ public class LibraryGUI extends JFrame {
         return mainDisplay;
     }
 
-    public JPanel getTopBar() {
-        return topBar;
-    }
-
-    public JPanel getBottomBar() {
-        return bottomBar;
-    }
-
     public Library getLibrary() {
         return library;
-    }
-
-    public Book getBook() {
-        return book;
     }
 
     public static void main(String[] args) {

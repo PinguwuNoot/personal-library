@@ -13,20 +13,18 @@ import java.util.List;
 
 import static ui.gui.LibraryGUI.*;
 
-public abstract class BookPanel extends JPanel {
+public abstract class BookPanel {
     protected LibraryGUI libraryGUI;
     protected JPanel mainDisplay;
-    protected JPanel topBar;
-    protected JPanel bottomBar;
 
     protected Library library;
 
-    protected String title;
-    protected String author;
-    protected List<String> genres;
-    protected int pages;
-    protected int rating;
-    protected boolean finished;
+    protected static String title;
+    protected static String author;
+    protected static List<String> genres;
+    protected static int pages;
+    protected static int rating;
+    protected static boolean finished;
 
     protected static JLabel titleLabel;
     protected static JTextField titleField;
@@ -44,8 +42,6 @@ public abstract class BookPanel extends JPanel {
     public BookPanel(LibraryGUI libraryGUI) {
         this.libraryGUI = libraryGUI;
         mainDisplay = libraryGUI.getMainDisplay();
-        topBar = libraryGUI.getTopBar();
-        bottomBar = libraryGUI.getBottomBar();
 
         library = libraryGUI.getLibrary();
     }
@@ -53,18 +49,11 @@ public abstract class BookPanel extends JPanel {
     // MODIFIES: this
     // EFFECTS: redraws frame components to add a new book
     protected void displayBookPanel() {
-        setFrameVisibilityFalse();
+        libraryGUI.setFrameVisibilityFalse();
         setMainDisplayToBookPanel();
 
         mainDisplay.add(initBookInputsPanel(), BorderLayout.PAGE_START);
         mainDisplay.add(initBookButtonsPanel(), BorderLayout.PAGE_END);
-    }
-
-    // MODIFIES: this
-    // EFFECTS: sets top and bottom bars to invisible
-    private void setFrameVisibilityFalse() {
-        topBar.setVisible(false);
-        bottomBar.setVisible(false);
     }
 
     // redraws main display to a book panel
@@ -146,12 +135,12 @@ public abstract class BookPanel extends JPanel {
     // MODIFIES: this
     // EFFECTS: gets all the inputs from the text field inputs
     protected void getInputsInInputsPanel() {
-        this.title = titleField.getText();
-        this.author = authorField.getText();
-        this.genres = getGenresFieldInput(genresField);
-        this.pages = Integer.parseInt(pagesField.getText());
-        this.rating = Integer.parseInt(ratingField.getText());
-        this.finished = finishedField.isSelected();
+        title = titleField.getText();
+        author = authorField.getText();
+        genres = getGenresFieldInput(genresField);
+        pages = Integer.parseInt(pagesField.getText());
+        rating = Integer.parseInt(ratingField.getText());
+        finished = finishedField.isSelected();
     }
 
     // EFFECTS: parses genres field input as a string array list
