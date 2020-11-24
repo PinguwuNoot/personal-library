@@ -25,14 +25,7 @@ public class Book implements Writable {
     public Book(String title, String author, List<String> genres, int pages, int rating, boolean finished) {
         this.title = title;
         this.author = author;
-        //this.author = new Author(author);
-
         this.genres = genres;
-//        this.genres = new ArrayList<>();
-//        for (String g : genres) {
-//            this.genres.add(new Genre(g));
-//        }
-
         this.pages = pages;
         this.rating = rating;
         this.finished = finished;
@@ -46,16 +39,16 @@ public class Book implements Writable {
         this.author = author;
     }
 
-    // REQUIRES: genres must not already contain newGenre
+    // REQUIRES: genres must not already contain genre
     // MODIFIES: this
-    // EFFECTS: adds newGenre to genres
+    // EFFECTS: adds genre to genres
     public void addGenre(String genre) {
         genres.add(genre);
     }
 
-    // REQUIRES: genres must already contain newGenre
+    // REQUIRES: genres must already contain genre
     // MODIFIES: this
-    // EFFECTS: removes newGenre from genres
+    // EFFECTS: removes genre from genres
     public void removeGenre(String genre) {
         genres.remove(genre);
     }

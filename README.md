@@ -27,3 +27,7 @@ I came up with the idea for this project because I have a list of books that I r
 
 For task 2, I decided to implement a type hierarchy involving the BookPanel, AddBookPanel, and CurrentBookPanel classes. This was done in order to improve cohesion within the main GUI class and to reduce the duplication of code involving displaying a book panel.
 
+## Phase 4: Task 3
+
+-   In the Book class, I would add exception handling to the constructor and setters for the pages and rating fields to ensure that the value of pages is always greater than 0 and that the rating field is always between 0 and 10.
+-   In the Book class, I would change the genres field type from a list to a set since there should never be duplicate genres.

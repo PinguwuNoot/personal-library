@@ -233,7 +233,7 @@ public class LibraryGUI extends JFrame {
         bookLabel.setOpaque(true);
         bookLabel.setFont(BOOK_COVER_FONT);
         bookLabel.setText(printBookCover(b));
-        bookLabel.setHorizontalAlignment(JLabel.CENTER);
+        bookLabel.setHorizontalAlignment(JLabel.RIGHT);
         bookLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

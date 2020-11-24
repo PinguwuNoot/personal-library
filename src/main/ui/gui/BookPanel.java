@@ -1,5 +1,6 @@
 package ui.gui;
 
+import model.Book;
 import model.Library;
 
 import javax.swing.*;
@@ -19,6 +20,7 @@ public abstract class BookPanel {
     protected JPanel mainDisplay;
 
     protected Library library;
+    protected Book book;
 
     protected static String title;
     protected static String author;

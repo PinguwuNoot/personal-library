@@ -12,7 +12,6 @@ import static ui.gui.LibraryGUI.*;
 
 // Represents a book panel when viewing or editing an existing book in the library
 public class CurrentBookPanel extends BookPanel {
-    private Book book;
 
     public CurrentBookPanel(LibraryGUI libraryGUI, Book book) {
         super(libraryGUI);

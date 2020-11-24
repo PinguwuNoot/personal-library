@@ -55,8 +55,8 @@ public class AddBookPanel extends BookPanel {
             public void actionPerformed(ActionEvent e) {
                 getInputsInInputsPanel();
 
-                Book newBook = new Book(title, author, genres, pages, rating, finished);
-                library.addBook(newBook);
+                book = new Book(title, author, genres, pages, rating, finished);
+                library.addBook(book);
 
                 libraryGUI.displayLibrary();
             }

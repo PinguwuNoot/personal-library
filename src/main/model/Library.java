@@ -16,14 +16,12 @@ public class Library implements Writable {
         books = new ArrayList<>();
     }
 
-    // REQUIRES: library must not already contain book
     // MODIFIES: this
     // EFFECTS: adds book to library
     public void addBook(Book book) {
         books.add(book);
     }
 
-    // REQUIRES: library must already contain book
     // MODIFIES: this
     // EFFECTS: removes book from library
     public void removeBook(Book book) {
