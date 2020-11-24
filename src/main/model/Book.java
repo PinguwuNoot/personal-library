@@ -106,28 +106,6 @@ public class Book implements Writable {
         return finished;
     }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) {
-//            return true;
-//        }
-//        if (o == null || getClass() != o.getClass()) {
-//            return false;
-//        }
-//        Book book = (Book) o;
-//        return pages == book.pages
-//                && rating == book.rating
-//                && complete == book.complete
-//                && title.equals(book.title)
-//                && author.equals(book.author)
-//                && genres.equals(book.genres);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(title, author, genres, pages, rating, complete);
-//    }
-
     // EFFECTS: converts and returns book as a json object
     @Override
     public JSONObject toJson() {
