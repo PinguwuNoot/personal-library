@@ -31,33 +31,14 @@ public class LibraryGUI extends JFrame {
     protected static final String NO = "No";
 
     private Library library;
-//    private Book book;
     private JsonReader jsonReader;
     private JsonWriter jsonWriter;
-//    private List<String> genres;
-//    private int pages;
-//    private int rating;
-//    private boolean finished;
 
-//    private GridBagConstraints gc;
     private LibraryGUI libraryGUI;
     private JPanel mainDisplay;
     private JPanel topBar;
     private JPanel bottomBar;
     private BookPanel bookPanel;
-
-//    private static JLabel titleLabel;
-//    private static JTextField titleField;
-//    private static JLabel authorLabel;
-//    private static JTextField authorField;
-//    private static JLabel genresLabel;
-//    private static JTextField genresField;
-//    private static JLabel pagesLabel;
-//    private static JTextField pagesField;
-//    private static JLabel ratingLabel;
-//    private static JTextField ratingField;
-//    private static JLabel finishedLabel;
-//    private static JToggleButton finishedField;
 
     // EFFECTS: runs library application
     public LibraryGUI() {
@@ -189,175 +170,9 @@ public class LibraryGUI extends JFrame {
         return addButton;
     }
 
-    //TODO: REFACTORED OUT
-//    // MODIFIES: this
-//    // EFFECTS: redraws frame components to add a new book
-//    private void displayAddBookPanel() {
-//        setFrameVisibilityFalse();
-//        setMainDisplayToBookPanel();
-//
-//        mainDisplay.add(initNewBookInputsPanel(), BorderLayout.PAGE_START);
-//        mainDisplay.add(initNewBookButtonsPanel(), BorderLayout.PAGE_END);
-//    }
-//
-//    // MODIFIES: this
-//    // EFFECTS: sets top and bottom bars to invisible
-//    private void setFrameVisibilityFalse() {
-//        topBar.setVisible(false);
-//        bottomBar.setVisible(false);
-//    }
-
-//    // redraws main display to a book panel
-//    private void setMainDisplayToBookPanel() {
-//        mainDisplay.removeAll();
-//        mainDisplay.updateUI();
-//        mainDisplay.setBackground(BG_COLOR);
-//        mainDisplay.setLayout(new BorderLayout());
-//    }
-//
-//    // EFFECTS: initializes and draws a new panel for input labels and text fields in book panel
-//    private JPanel initNewBookInputsPanel() {
-//        JPanel inputsPanel = new JPanel();
-//        inputsPanel.setLayout(new BoxLayout(inputsPanel, BoxLayout.PAGE_AXIS));
-//        inputsPanel.setBackground(BG_COLOR);
-//
-//        initInputsPanelFields();
-//        optimizeInputsPanelFields();
-//        addToInputsPanel(inputsPanel);
-//
-//        return inputsPanel;
-//    }
-//
-//    // MODIFIES: this
-//    // EFFECTS: initializes inputs panel label and text field fields
-//    private void initInputsPanelFields() {
-//        titleLabel = new JLabel("Title");
-//        titleField = new JTextField("");
-//        authorLabel = new JLabel("Author");
-//        authorField = new JTextField("");
-//        genresLabel = new JLabel("Genres");
-//        genresField = new JTextField("");
-//        pagesLabel = new JLabel("Pages");
-//        pagesField = new JTextField("0");
-//        ratingLabel = new JLabel("Rating (/10)");
-//        ratingField = new JTextField("0");
-//        finishedLabel = new JLabel("Finished?");
-//        finishedField = new JToggleButton();
-//    }
-//
-//    // MODIFIES: this
-//    // EFFECTS: draws inputs panel labels and text fields
-//    private void optimizeInputsPanelFields() {
-//        titleLabel.setFont(LABEL_FONT);
-//        titleField.setFont(FIELD_FONT);
-//        authorLabel.setFont(LABEL_FONT);
-//        authorField.setFont(FIELD_FONT);
-//        genresLabel.setFont(LABEL_FONT);
-//        genresField.setFont(FIELD_FONT);
-//        pagesLabel.setFont(LABEL_FONT);
-//        pagesField.setFont(FIELD_FONT);
-//        ratingLabel.setFont(LABEL_FONT);
-//        ratingField.setFont(FIELD_FONT);
-//        finishedLabel.setFont(LABEL_FONT);
-//        finishedField.setFont(FIELD_FONT);
-//
-//        finishedField.setText(finishedField.isSelected() ? YES : NO);
-//        finishedField.addItemListener(new ItemListener() {
-//            @Override
-//            public void itemStateChanged(ItemEvent e) {
-//                finishedField.setText(finishedField.isSelected() ? YES : NO);
-//            }
-//        });
-//    }
-//
-//    // MODIFIES: inputsPanel
-//    // EFFECTS: adds all labels and text fields to inputs panel
-//    private void addToInputsPanel(JPanel inputsPanel) {
-//        inputsPanel.add(titleLabel);
-//        inputsPanel.add(titleField);
-//        inputsPanel.add(authorLabel);
-//        inputsPanel.add(authorField);
-//        inputsPanel.add(genresLabel);
-//        inputsPanel.add(genresField);
-//        inputsPanel.add(pagesLabel);
-//        inputsPanel.add(pagesField);
-//        inputsPanel.add(ratingLabel);
-//        inputsPanel.add(ratingField);
-//        inputsPanel.add(finishedLabel);
-//        inputsPanel.add(finishedField);
-//    }
-//
-//    // EFFECTS: initializes and draws a new panel for bottom buttons in book panel
-//    private JPanel initNewBookButtonsPanel() {
-//        JPanel buttonsPanel = new JPanel();
-//        buttonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-//        buttonsPanel.setPreferredSize(BUTTONS_PANEL_DIMENSIONS);
-//        buttonsPanel.setBackground(BG_COLOR);
-//
-//        buttonsPanel.add(initNewBookOkButton());
-//        buttonsPanel.add(initCancelButton());
-//
-//        return buttonsPanel;
-//    }
-//
-//    // EFFECTS: initializes a new button to take inputs and add new book based on inputs
-//    private JButton initNewBookOkButton() {
-//        JButton okButton = new JButton("OK");
-//        okButton.setFont(LABEL_FONT);
-//        okButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                getInputsInInputsPanel();
-//
-//                Book newBook = new Book(title, author, genres, pages, rating, finished);
-//                library.addBook(newBook);
-//
-//                displayLibrary();
-//            }
-//        });
-//
-//        return okButton;
-//    }
-//
-//    // MODIFIES: this
-//    // EFFECTS: gets all the inputs from the text field inputs
-//    private void getInputsInInputsPanel() {
-//        this.title = titleField.getText();
-//        this.author = authorField.getText();
-//        this.genres = getGenresFieldInput(genresField);
-//        this.pages = Integer.parseInt(pagesField.getText());
-//        this.rating = Integer.parseInt(ratingField.getText());
-//        this.finished = finishedField.isSelected();
-//    }
-//
-//    // EFFECTS: parses genres field input as a string array list
-//    private List<String> getGenresFieldInput(JTextField genresField) {
-//        String[] genresArray = genresField.getText().split(GENRES_FIELD_FORMATTING);
-//
-//        return Arrays.asList(genresArray);
-//    }
-//
-//    // EFFECTS: initializes a new button to cancel from book panel and return to main library
-//    private JButton initCancelButton() {
-//        JButton cancelButton = new JButton("Cancel");
-//        cancelButton.setFont(LABEL_FONT);
-//        cancelButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                displayLibrary();
-//            }
-//        });
-//
-//        return cancelButton;
-//    }
-    //TODO: REFACTORED OUT
-
-
     // MODIFIES: this
     // EFFECTS: initializes main display of frame and adds to a scroll pane, then adds scroll pane to frame
     private void initMainDisplay() {
-//        gc = new GridBagConstraints();
-
         mainDisplay = new JPanel();
         JScrollPane scrollPane = new JScrollPane(mainDisplay, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -371,10 +186,6 @@ public class LibraryGUI extends JFrame {
         setFrameVisibilityTrue();
         resetMainDisplay();
         addEachBook();
-
-        // temporary
-//        Border border = BorderFactory.createLineBorder(Color.BLACK, 3);
-//        mainDisplay.setBorder(border);
     }
 
     // MODIFIES: this
@@ -411,30 +222,7 @@ public class LibraryGUI extends JFrame {
         for (Book b : books) {
             mainDisplay.add(initBookLabel(b));
         }
-
-//        int i = 0;
-//        int j = 0;
-//        for (Book b : books) {
-//            if (i > 4) {
-//                i = 0;
-//                j++;
-//            }
-//
-//            setGridBagConstraints(i, j);
-//            mainDisplay.add(initBookLabel(b), gc);
-//
-//            i++;
-//        }
     }
-
-//    private void setGridBagConstraints(int i, int j) {
-//        gc.gridx = i;
-//        gc.gridy = j;
-//        gc.weightx = 0.5;
-//        gc.weighty = 0.5;
-//        gc.fill = GridBagConstraints.BOTH;
-//        gc.insets = new Insets(5, 50, 5, 30);
-//    }
 
     // EFFECTS: initializes and draws a new label to display a book
     private JLabel initBookLabel(Book b) {
@@ -468,130 +256,6 @@ public class LibraryGUI extends JFrame {
 
         return bookCover;
     }
-
-//    //TODO: REFACTORED OUT
-//
-//    // MODIFIES: this
-//    // EFFECTS: redraws frame components to view, edit, or delete a book
-//    private void displayCurrentBookPanel() {
-//        setFrameVisibilityFalse();
-//        setMainDisplayToBookPanel();
-//
-//        mainDisplay.add(initCurrentBookInputsPanel(), BorderLayout.PAGE_START);
-//        mainDisplay.add(initCurrentBookButtonsPanel(), BorderLayout.PAGE_END);
-//    }
-//
-//    // MODIFIES: this
-//    // EFFECTS: initializes and draws a new panel for input labels and text fields in book panel;
-//    //          sets text fields to the book's values
-//    private JPanel initCurrentBookInputsPanel() {
-//        JPanel inputsPanel = new JPanel();
-//        inputsPanel.setLayout(new BoxLayout(inputsPanel, BoxLayout.PAGE_AXIS));
-//        inputsPanel.setBackground(BG_COLOR); // comment out to see panel sections
-//
-//        initInputsPanelFields();
-//        optimizeInputsPanelFields();
-//        setInputsPanelFields();
-//        addToInputsPanel(inputsPanel);
-//
-//        return inputsPanel;
-//    }
-//
-//    // MODIFIES: this
-//    // EFFECTS: gets book's title, author, list of genres, pages, rating, and finished values, and sets them to the
-//    // text fields of panel
-//    private void setInputsPanelFields() {
-//        this.title = book.getTitle();
-//        this.author = book.getAuthor();
-//        this.genres = book.getGenres();
-//        this.pages = book.getPages();
-//        this.rating = book.getRating();
-//        this.finished = book.getFinished();
-//
-//        titleField.setText(this.title);
-//        authorField.setText(this.author);
-//        genresField.setText(genresToString());
-//        pagesField.setText(String.valueOf(this.pages));
-//        ratingField.setText(String.valueOf(this.rating));
-//        finishedField.setSelected(this.finished);
-//    }
-//
-//    // EFFECTS: converts list of genres to a string to put in the text field
-//    private String genresToString() {
-//        StringBuilder genresString = new StringBuilder();
-//
-//        int i = 1;
-//        for (String g : this.genres) {
-//            if (i == this.genres.size()) {
-//                genresString.append(g);
-//            } else {
-//                genresString.append(g).append(GENRES_FIELD_FORMATTING);
-//            }
-//            i++;
-//        }
-//
-//        return genresString.toString();
-//    }
-//
-//    // EFFECTS: initializes and draws a new panel for bottom buttons in book panel
-//    private JPanel initCurrentBookButtonsPanel() {
-//        JPanel buttonsPanel = new JPanel();
-//        buttonsPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-//        buttonsPanel.setPreferredSize(BUTTONS_PANEL_DIMENSIONS);
-//        buttonsPanel.setBackground(BG_COLOR);
-//
-//        buttonsPanel.add(initCurrentBookOkButton());
-//        buttonsPanel.add(initCancelButton());
-//        buttonsPanel.add(initDeleteBookButton());
-//
-//        return buttonsPanel;
-//    }
-//
-//    // EFFECTS: initializes a new button to take inputs and edit book's values based on inputs
-//    private JButton initCurrentBookOkButton() {
-//        JButton okButton = new JButton("OK");
-//        okButton.setFont(LABEL_FONT);
-//        okButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                getInputsInInputsPanel();
-//
-//                book.setTitle(title);
-//                book.setAuthor(author);
-//                book.setGenres(genres);
-//                book.setPages(pages);
-//                book.setRating(rating);
-//                book.setFinished(finished);
-//
-//                displayLibrary();
-//            }
-//        });
-//
-//        return okButton;
-//    }
-//
-//    // EFFECTS: initializes a new button to delete book from library
-//    private JPanel initDeleteBookButton() {
-//        JPanel deleteButtonPanel = new JPanel();
-//        deleteButtonPanel.setBackground(BG_COLOR);
-//        deleteButtonPanel.setBorder(new EmptyBorder(0, 480, 0, 0));
-//
-//        JButton deleteButton = new JButton("Delete");
-//        deleteButton.setFont(LABEL_FONT);
-//        deleteButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                library.removeBook(book);
-//
-//                displayLibrary();
-//            }
-//        });
-//
-//        deleteButtonPanel.add(deleteButton);
-//
-//        return deleteButtonPanel;
-//    }
-    //TODO: REFACTORED OUT
 
     public JPanel getMainDisplay() {
         return mainDisplay;
