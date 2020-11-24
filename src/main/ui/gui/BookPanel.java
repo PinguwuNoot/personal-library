@@ -13,6 +13,7 @@ import java.util.List;
 
 import static ui.gui.LibraryGUI.*;
 
+// An abstract class representing a panel for a book
 public abstract class BookPanel {
     protected LibraryGUI libraryGUI;
     protected JPanel mainDisplay;
@@ -39,6 +40,7 @@ public abstract class BookPanel {
     protected static JLabel finishedLabel;
     protected static JToggleButton finishedField;
 
+    // EFFECTS: constructs a book panel object
     public BookPanel(LibraryGUI libraryGUI) {
         this.libraryGUI = libraryGUI;
         mainDisplay = libraryGUI.getMainDisplay();
@@ -56,7 +58,8 @@ public abstract class BookPanel {
         mainDisplay.add(initBookButtonsPanel(), BorderLayout.PAGE_END);
     }
 
-    // redraws main display to a book panel
+    // MODIFIES: this
+    // EFFECTS: redraws main display as a book panel
     private void setMainDisplayToBookPanel() {
         mainDisplay.removeAll();
         mainDisplay.updateUI();
@@ -64,6 +67,7 @@ public abstract class BookPanel {
         mainDisplay.setLayout(new BorderLayout());
     }
 
+    // MODIFIES: this
     // EFFECTS: initializes and draws a new panel for input labels and text fields in book panel
     protected abstract JPanel initBookInputsPanel();
 
@@ -129,7 +133,8 @@ public abstract class BookPanel {
     // EFFECTS: initializes and draws a new panel for bottom buttons in book panel
     protected abstract JPanel initBookButtonsPanel();
 
-    // EFFECTS: initializes a new button to take inputs and edit book's values based on inputs
+    // EFFECTS: initializes a new button that updates library based on inputs, and exits out of book panel back to main
+    //          library
     protected abstract JButton initBookOkButton();
 
     // MODIFIES: this
@@ -143,14 +148,15 @@ public abstract class BookPanel {
         finished = finishedField.isSelected();
     }
 
-    // EFFECTS: parses genres field input as a string array list
+    // EFFECTS: converts genres text field input to a string array list
     private List<String> getGenresFieldInput(JTextField genresField) {
         String[] genresArray = genresField.getText().split(GENRES_FIELD_FORMATTING);
 
         return Arrays.asList(genresArray);
     }
 
-    // EFFECTS: initializes a new button to cancel from book panel and return to main library
+    // EFFECTS: initializes and draws a new button that cancels current action and exits out of book panel back to main
+    //          library
     protected JButton initCancelButton() {
         JButton cancelButton = new JButton("Cancel");
         cancelButton.setFont(LABEL_FONT);

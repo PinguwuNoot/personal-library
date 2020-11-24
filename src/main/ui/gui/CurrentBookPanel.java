@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 
 import static ui.gui.LibraryGUI.*;
 
+// Represents a book panel when viewing or editing an existing book in the library
 public class CurrentBookPanel extends BookPanel {
     private Book book;
 
@@ -18,11 +19,13 @@ public class CurrentBookPanel extends BookPanel {
         this.book = book;
     }
 
+    // EFFECTS: initializes and draws a new panel for input labels and text fields in book panel;
+    //          sets text fields to the book's attributes respectively
     @Override
     protected JPanel initBookInputsPanel() {
         JPanel inputsPanel = new JPanel();
         inputsPanel.setLayout(new BoxLayout(inputsPanel, BoxLayout.PAGE_AXIS));
-        inputsPanel.setBackground(BG_COLOR); // comment out to see panel sections
+        inputsPanel.setBackground(BG_COLOR);
 
         initInputsPanelFields();
         optimizeInputsPanelFields();
@@ -34,7 +37,7 @@ public class CurrentBookPanel extends BookPanel {
 
     // MODIFIES: this
     // EFFECTS: gets book's title, author, list of genres, pages, rating, and finished values, and sets them to the
-    // text fields of panel
+    //          text fields of the inputs panel
     private void setInputsPanelFields() {
         title = book.getTitle();
         author = book.getAuthor();
@@ -62,12 +65,15 @@ public class CurrentBookPanel extends BookPanel {
             } else {
                 genresString.append(g).append(GENRES_FIELD_FORMATTING);
             }
+
             i++;
         }
 
         return genresString.toString();
     }
 
+    //EFFECTS: initializes and draws a new panel for bottom buttons in book panel;
+    //         adds ok button, cancel button, and delete button
     @Override
     protected JPanel initBookButtonsPanel() {
         JPanel buttonsPanel = new JPanel();
@@ -82,6 +88,8 @@ public class CurrentBookPanel extends BookPanel {
         return buttonsPanel;
     }
 
+    // EFFECTS: initializes a new button that updates book in library based on inputs, and exits out of book panel back
+    //          to main library
     @Override
     protected JButton initBookOkButton() {
         JButton okButton = new JButton("OK");
@@ -105,7 +113,7 @@ public class CurrentBookPanel extends BookPanel {
         return okButton;
     }
 
-    // EFFECTS: initializes a new button to delete book from library
+    // EFFECTS: initializes a new button that deletes book from library and exits out of book panel back to main library
     private JPanel initDeleteBookButton() {
         JPanel deleteButtonPanel = new JPanel();
         deleteButtonPanel.setBackground(BG_COLOR);

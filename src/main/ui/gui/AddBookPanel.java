@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 
 import static ui.gui.LibraryGUI.*;
 
+// Represents a book panel when adding a book to the library
 public class AddBookPanel extends BookPanel {
 
     public AddBookPanel(LibraryGUI libraryGUI) {
@@ -28,6 +29,8 @@ public class AddBookPanel extends BookPanel {
         return inputsPanel;
     }
 
+    //EFFECTS: initializes and draws a new panel for bottom buttons in book panel;
+    //         adds ok button and cancel button
     @Override
     protected JPanel initBookButtonsPanel() {
         JPanel buttonsPanel = new JPanel();
@@ -41,6 +44,8 @@ public class AddBookPanel extends BookPanel {
         return buttonsPanel;
     }
 
+    // EFFECTS: initializes a new button that adds new book to library based on inputs, and exits out of book panel back
+    //          to main library
     @Override
     protected JButton initBookOkButton() {
         JButton okButton = new JButton("OK");

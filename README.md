@@ -22,3 +22,8 @@ I came up with the idea for this project because I have a list of books that I r
 * As a user, I want to be able to edit the information about a book
 * As a user, I want to be able to save my library to a file
 * As a user, I want to be able to load my library from a file
+
+## Phase 4: Task 2
+
+For task 2, I decided to implement a type hierarchy involving the BookPanel, AddBookPanel, and CurrentBookPanel classes. This was done in order to improve cohesion within the main GUI class and to reduce the duplication of code involving displaying a book panel.
+
